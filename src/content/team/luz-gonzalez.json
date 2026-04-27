@@ -1,0 +1,14 @@
+{
+  "name": "Luz A. Gonzalez",
+  "credentials": "COTA",
+  "role": {
+    "en": "Certified Occupational Therapist Assistant",
+    "es": "Asistente Certificada de Terapia Ocupacional"
+  },
+  "bio": {
+    "en": "Luz A. Gonzalez is a licensed Certified Occupational Therapist Assistant who graduated from Keiser University in 2018. Prior to attaining her degree, Luz knew the setting she was passionate about and pursued opportunities in outpatient rehabilitation for 6 years to gain the skills and knowledge to ensure her success. Luz has dedicated her time to specializing in orthopedic and neurological conditions of the upper extremity. She is an enthusiastic, hardworking, dedicated team player committed to delivering the highest quality of care.",
+    "es": "Luz A. Gonzalez es Asistente Certificada de Terapia Ocupacional licenciada, graduada de Keiser University en 2018. Antes de obtener su título, Luz ya sabía cuál era el entorno que le apasionaba y buscó oportunidades en rehabilitación ambulatoria durante 6 años para adquirir las habilidades y conocimientos necesarios para asegurar su éxito. Luz ha dedicado su tiempo a especializarse en condiciones ortopédicas y neurológicas de la extremidad superior. Es una jugadora de equipo entusiasta, trabajadora y dedicada, comprometida con brindar la más alta calidad de atención."
+  },
+  "order": 50,
+  "photo": "/team/luz-gonzalez.jpg"
+}

@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ServicesGrid from '../../components/ServicesGrid.astro';
+---
+<BaseLayout
+  title="Services — LIV Active Therapy"
+  description="Physical therapy, occupational therapy, cupping, kinesiotaping, BFR, and sports performance training in Miami."
+  lang="en"
+>
+  <PageHero eyebrow="Our services" subtitle="Every plan is designed by a licensed therapist — combining hands-on techniques with evidence-based modalities to get you moving again.">
+    Therapies built around <span class="text-brand-600 italic">you</span>.
+  </PageHero>
+  <ServicesGrid lang="en" noHeader />
+</BaseLayout>

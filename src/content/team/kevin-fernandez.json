@@ -1,0 +1,14 @@
+{
+  "name": "Kevin Fernandez, DPT",
+  "credentials": "DPT",
+  "role": {
+    "en": "Physical Therapist",
+    "es": "Terapeuta Físico"
+  },
+  "bio": {
+    "en": "Dr. Fernandez received his Doctorate of Physical Therapy degree in 2019 at the University of St. Augustine. Before receiving his DPT, he attended Florida International University and earned a Bachelor of Science degree in Sports and Fitness Studies. His passion for orthopedics and sports performance is what drives him to get his patients to achieve their goals. Born and raised in Miami, Dr. Fernandez loves to play sports and be by the water. As a clinician, he practices evidence-based research and is patient-centered. His treatment approach relies heavily on manual therapy techniques, therapeutic exercises, movement performance, and patient education.",
+    "es": "El Dr. Fernandez recibió su Doctorado en Terapia Física en 2019 en la University of St. Augustine. Antes de su DPT, asistió a Florida International University y obtuvo una Licenciatura en Estudios Deportivos y de Fitness. Su pasión por la ortopedia y el rendimiento deportivo lo impulsa a ayudar a sus pacientes a alcanzar sus metas. Nacido y criado en Miami, al Dr. Fernandez le encanta practicar deportes y estar cerca del agua. Como clínico, practica investigación basada en evidencia y se centra en el paciente. Su enfoque de tratamiento se basa en técnicas de terapia manual, ejercicios terapéuticos, rendimiento del movimiento y educación al paciente."
+  },
+  "order": 10,
+  "photo": "/team/kevin-fernandez.jpg"
+}

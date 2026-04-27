@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+
+const pillars = [
+  {
+    icon: 'check',
+    title: 'Terapeutas seleccionados a mano',
+    body: 'Cada clínico de nuestro equipo es seleccionado de forma exclusiva — no solo por su experiencia y habilidades, sino por su dedicación, compasión y motivación para asegurar resultados y satisfacción óptimos del paciente.',
+  },
+  {
+    icon: 'check',
+    title: 'Una filosofía de tratamiento consistente',
+    body: 'Cada terapeuta es entrenado en nuestra filosofía de mejorar la función óptima, movilidad, fuerza y estabilidad mediante técnicas de tratamiento y estrategias de intervención específicas.',
+  },
+  {
+    icon: 'check',
+    title: 'Planes de intervención individualizados',
+    body: 'Después de tu evaluación inicial, documentamos tus déficits funcionales junto con tus metas personales para construir un plan de intervención diseñado para ti — no una plantilla.',
+  },
+  {
+    icon: 'check',
+    title: 'Ejercicio supervisado por el terapeuta',
+    body: 'Cada actividad que realizas es monitoreada por tu terapeuta para asegurar la forma correcta y prevenir lesiones. Sin circuitos sin supervisión, sin adivinanzas.',
+  },
+  {
+    icon: 'check',
+    title: 'Bienestar más allá del alta',
+    body: 'Una vez que completes la terapia, puedes unirte a nuestros programas de bienestar — manteniéndote fuerte, móvil y activo mucho después de terminar el plan de tratamiento.',
+  },
+  {
+    icon: 'check',
+    title: 'Basado en evidencia, siempre',
+    body: 'Todas las modalidades de tratamiento han sido científicamente probadas e investigadas para mejorar los resultados del paciente.',
+  },
+];
+---
+<BaseLayout title="Nosotros — LIV Active Therapy" lang="es">
+  <PageHero eyebrow="Sobre nosotros" subtitle="Terapeutas seleccionados a mano. Planes individualizados. Una filosofía que no termina con el alta.">
+    Construido alrededor de <span class="text-brand-600 italic">tu</span> recuperación.
+  </PageHero>
+
+  <!-- Filosofía -->
+  <section class="container-x py-16 md:py-20">
+    <!-- Bloque 1 -->
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div class="lg:col-span-5">
+        <div class="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500 ring-1 ring-brand-300/50 shadow-xl shadow-brand-900/10">
+          <div aria-hidden="true" class="absolute inset-0 opacity-30 mix-blend-overlay bg-[radial-gradient(circle_at_30%_20%,white,transparent_55%),radial-gradient(circle_at_70%_80%,white,transparent_45%)]"></div>
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-white/80">
+            <svg class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+              <circle cx="12" cy="13" r="4" />
+            </svg>
+            <p class="mt-3 text-xs font-bold uppercase tracking-[0.2em]">Espacio para foto</p>
+            <p class="mt-1 text-xs text-white/60">Clínica / terapeuta en acción</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-7">
+        <span class="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">01 — Nuestro equipo</span>
+        <h3 class="mt-3 text-2xl md:text-3xl font-bold text-ink-900 tracking-tight">
+          Terapeutas seleccionados a mano, entrenados en una sola filosofía.
+        </h3>
+        <p class="mt-5 text-base md:text-lg text-ink-700 leading-relaxed">
+          Contratamos terapeutas ocupacionales y físicos seleccionados de forma exclusiva — no solo por su experiencia, conocimiento y habilidades, sino por su dedicación, compasión y motivación para asegurar resultados óptimos del paciente.
+        </p>
+        <p class="mt-4 text-base md:text-lg text-ink-700 leading-relaxed">
+          Cada terapeuta es entrenado en la filosofía de Liv Active Therapy Center: mejorar la función, movilidad, fuerza y estabilidad óptimas mediante un enfoque sistemático con técnicas de tratamiento e intervención específicas.
+        </p>
+      </div>
+    </div>
+
+    <!-- Bloque 2: Recorrido en 4 pasos -->
+    <div class="mt-24">
+      <div class="text-center max-w-2xl mx-auto">
+        <span class="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">02 — Tu recorrido</span>
+        <h3 class="mt-3 text-2xl md:text-3xl font-bold text-ink-900 tracking-tight">
+          Desde tu primera visita hasta el bienestar a largo plazo
+        </h3>
+      </div>
+
+      <ol class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {[
+          { n: '01', title: 'Evaluación inicial', body: 'Documentamos tus déficits funcionales junto con tus metas personales para entender exactamente lo que necesitas.' },
+          { n: '02', title: 'Plan personalizado', body: 'Un plan de intervención individualizado — no una plantilla — construido con educación, terapia manual y ejercicio dirigido.' },
+          { n: '03', title: 'Tratamiento activo', body: 'Cada ejercicio es monitoreado por tu terapeuta para asegurar la forma correcta y prevenir lesiones. Los programas progresan conforme mejoras.' },
+          { n: '04', title: 'Bienestar más allá', body: 'Tras el alta, únete a nuestros programas de bienestar para mantener fuerza, movilidad y confianza — supervisados por nuestro equipo.' },
+        ].map((step) => (
+          <li class="group relative rounded-2xl bg-white ring-1 ring-ink-100 p-6 hover:ring-brand-300 hover:-translate-y-1 transition-all duration-300">
+            <div class="text-5xl font-display font-extrabold text-brand-200 group-hover:text-brand-300 transition-colors leading-none">
+              {step.n}
+            </div>
+            <h4 class="mt-3 text-lg font-bold text-ink-900">{step.title}</h4>
+            <p class="mt-2 text-sm text-ink-600 leading-relaxed">{step.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <!-- Bloque 3: Cita destacada -->
+    <div class="mt-24 relative">
+      <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-700 via-brand-600 to-brand-800 px-8 py-14 md:px-16 md:py-20 shadow-2xl shadow-brand-900/20">
+        <div aria-hidden="true" class="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
+        <div aria-hidden="true" class="pointer-events-none absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-accent-400/30 blur-3xl"></div>
+
+        <svg aria-hidden="true" class="relative h-12 w-12 text-accent-300/80" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M9 7H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v3a2 2 0 0 1-2 2H4v2h1a4 4 0 0 0 4-4V7zM21 7h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v3a2 2 0 0 1-2 2h-1v2h1a4 4 0 0 0 4-4V7z" />
+        </svg>
+        <p class="relative mt-4 text-2xl md:text-4xl font-display font-semibold text-white italic leading-snug max-w-4xl">
+          Todas las modalidades de tratamiento han sido científicamente probadas e investigadas para mejorar los resultados del paciente.
+        </p>
+        <div class="relative mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-accent-200">
+          <span class="h-1 w-8 bg-accent-300 rounded-full"></span>
+          El estándar LIV Active
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloque 4: Cierre -->
+    <div class="mt-24 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div class="lg:col-span-7 lg:order-1 order-2">
+        <span class="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">03 — Basado en investigación</span>
+        <h3 class="mt-3 text-2xl md:text-3xl font-bold text-ink-900 tracking-tight">
+          Modalidades respaldadas por la ciencia. Decisiones respaldadas por evidencia.
+        </h3>
+        <p class="mt-5 text-base md:text-lg text-ink-700 leading-relaxed">
+          En cada cita, el terapeuta físico utiliza varias modalidades para facilitar la sanación — incrementando la circulación y la oxigenación, y disminuyendo la inflamación. Las decisiones de tratamiento individualizadas de nuestros terapeutas están basadas en investigación actual y estudios de casos clínicos.
+        </p>
+        <ul class="mt-6 grid sm:grid-cols-2 gap-3">
+          {[
+            'Terapia manual',
+            'Ejercicio terapéutico',
+            'Modalidades y estiramientos',
+            'Educación al paciente',
+          ].map((item) => (
+            <li class="flex items-center gap-2.5 text-sm text-ink-700">
+              <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-brand-700 shrink-0">
+                <Icon name="check" class="h-3.5 w-3.5" />
+              </span>
+              <span class="font-medium">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="lg:col-span-5 lg:order-2 order-1">
+        <div class="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-gradient-to-br from-accent-200 via-accent-300 to-accent-500 ring-1 ring-accent-300/50 shadow-xl shadow-accent-900/10">
+          <div aria-hidden="true" class="absolute inset-0 opacity-30 mix-blend-overlay bg-[radial-gradient(circle_at_30%_20%,white,transparent_55%),radial-gradient(circle_at_70%_80%,white,transparent_45%)]"></div>
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-white/85">
+            <svg class="h-16 w-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+              <circle cx="12" cy="13" r="4" />
+            </svg>
+            <p class="mt-3 text-xs font-bold uppercase tracking-[0.2em]">Espacio para foto</p>
+            <p class="mt-1 text-xs text-white/70">Tratamiento / equipo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cómo te cuidamos -->
+  <section class="container-x py-20 border-t border-ink-100">
+    <h2 class="text-3xl md:text-4xl font-bold text-ink-900">Cómo te cuidamos</h2>
+    <ul class="mt-10 grid gap-6 md:grid-cols-2">
+      {pillars.map((p) => (
+        <li class="rounded-[var(--radius-card)] bg-white p-7 ring-1 ring-ink-100">
+          <div class="h-10 w-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
+            <Icon name={p.icon} class="h-5 w-5" />
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-ink-900">{p.title}</h3>
+          <p class="mt-2 text-sm text-ink-600 leading-relaxed">{p.body}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+</BaseLayout>

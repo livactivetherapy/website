@@ -1,0 +1,14 @@
+{
+  "name": "Janely Perez",
+  "credentials": "PTA",
+  "role": {
+    "en": "Physical Therapist Assistant",
+    "es": "Asistente de Terapia Física"
+  },
+  "bio": {
+    "en": "With over two decades of experience, Janely Perez is a highly skilled and compassionate Physical Therapist Assistant dedicated to helping patients regain mobility and enhance their quality of life. She earned her Associate of Science degree in Physical Therapy from Miami Dade College in 2004 and has since built a career rooted in patient-centered care, with a strong focus on outpatient orthopedics. Janely specializes in manual therapy and functional exercise, tailoring each treatment plan to the unique needs of her patients to support recovery and long-term wellness. Her calm, supportive approach and deep clinical knowledge have made her a trusted guide for those on the path to recovery. Committed to lifelong learning and professional growth, Janely is currently pursuing her Bachelor of Science degree to further elevate her practice. Her mission is to create a welcoming and encouraging environment where every patient feels seen, supported, and empowered to reach their goals.",
+    "es": "Con más de dos décadas de experiencia, Janely Perez es una Asistente de Terapia Física altamente capacitada y compasiva, dedicada a ayudar a los pacientes a recuperar la movilidad y mejorar su calidad de vida. Obtuvo su título de Asociado en Ciencias en Terapia Física en Miami Dade College en 2004 y desde entonces ha construido una carrera basada en la atención centrada en el paciente, con un fuerte enfoque en ortopedia ambulatoria. Janely se especializa en terapia manual y ejercicio funcional, adaptando cada plan de tratamiento a las necesidades únicas de sus pacientes para apoyar la recuperación y el bienestar a largo plazo. Su enfoque calmado y de apoyo, junto con su profundo conocimiento clínico, la han convertido en una guía confiable para quienes están en el camino de la recuperación. Comprometida con el aprendizaje continuo y el crecimiento profesional, Janely actualmente cursa su Licenciatura en Ciencias para elevar aún más su práctica. Su misión es crear un ambiente acogedor y alentador donde cada paciente se sienta visto, apoyado y empoderado para alcanzar sus metas."
+  },
+  "order": 40,
+  "photo": "/team/janely-perez.jpg"
+}

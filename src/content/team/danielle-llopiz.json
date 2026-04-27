@@ -1,0 +1,14 @@
+{
+  "name": "Danielle Llopiz",
+  "credentials": "MSOT",
+  "role": {
+    "en": "Occupational Therapist",
+    "es": "Terapeuta Ocupacional"
+  },
+  "bio": {
+    "en": "Danielle is a licensed and registered Occupational Therapist. She completed her Master's in Occupational Therapy degree from Florida International University in 2020. Danielle also has a Bachelor's degree in Exercise Science with a concentration in coaching, from Ithaca College in Ithaca, NY. She has worked in health and wellness as a personal trainer, group fitness class instructor, and nutrition coach for over 6 years. Danielle has experience training individuals in functional fitness as well as Olympic Weightlifting and is Level 2 Trainer Certified in CrossFit. She has a passion for movement and a strong interest in treating upper extremities. Through occupational therapy treatments, Danielle strives to allow her patients to live a functional and independent life, regardless of disability or injury they may be suffering from. When Danielle is not working, she enjoys spending time working out, playing with her dog, and traveling with her partner.",
+    "es": "Danielle es una Terapeuta Ocupacional licenciada y registrada. Completó su Maestría en Terapia Ocupacional en Florida International University en 2020. Danielle también tiene una Licenciatura en Ciencias del Ejercicio con concentración en entrenamiento, de Ithaca College en Ithaca, NY. Ha trabajado en salud y bienestar como entrenadora personal, instructora de clases grupales de fitness y coach de nutrición por más de 6 años. Danielle tiene experiencia entrenando a personas en fitness funcional y levantamiento olímpico, y está certificada como Entrenadora Nivel 2 en CrossFit. Tiene pasión por el movimiento y un fuerte interés en tratar extremidades superiores. A través de los tratamientos de terapia ocupacional, Danielle se esfuerza por permitir que sus pacientes vivan una vida funcional e independiente, sin importar la discapacidad o lesión que puedan estar sufriendo. Cuando no está trabajando, disfruta entrenar, jugar con su perro y viajar con su pareja."
+  },
+  "order": 90,
+  "photo": "/team/danielle-llopiz.jpg"
+}

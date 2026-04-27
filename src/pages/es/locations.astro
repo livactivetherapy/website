@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import LocationsPreview from '../../components/LocationsPreview.astro';
+---
+<BaseLayout title="Ubicaciones — LIV Active Therapy" lang="es">
+  <PageHero eyebrow="Visítanos" subtitle="Ambas clínicas ofrecen la misma rehabilitación uno a uno, recepción bilingüe y disponibilidad la misma semana para pacientes nuevos.">
+    Dos oficinas. <span class="text-brand-600 italic">Un</span> estándar de atención.
+  </PageHero>
+  <LocationsPreview lang="es" withMaps noHeader />
+</BaseLayout>

@@ -1,0 +1,14 @@
+{
+  "name": "Daniel Machado",
+  "credentials": "PTA",
+  "role": {
+    "en": "Physical Therapist Assistant",
+    "es": "Asistente de Terapia Física"
+  },
+  "bio": {
+    "en": "Daniel received his associate degree as a Physical Therapist Assistant in 2020 from The Praxis Institute in Miami, Florida. Daniel enjoys fitness, mountain biking, and traveling. Prior to joining Liv Active Therapy, he was a group fitness trainer for 7 years where he led CrossFit and bootcamp classes. Through his experience as a trainer, he developed a passion to promote health and wellness to all age groups and a better way of life. Now, as a physical therapist assistant, he thrives to improve patients' quality of life through evidence-based practice, functional movements, and manual therapy techniques. He continuously educates himself in his field and attends specialty courses to provide better all-around care to his patients.",
+    "es": "Daniel recibió su título asociado como Asistente de Terapia Física en 2020 en The Praxis Institute en Miami, Florida. A Daniel le gusta el fitness, el ciclismo de montaña y viajar. Antes de unirse a Liv Active Therapy, fue entrenador de fitness grupal durante 7 años, donde lideró clases de CrossFit y bootcamp. A través de su experiencia como entrenador, desarrolló una pasión por promover la salud y el bienestar para todos los grupos de edad y una mejor forma de vida. Ahora, como asistente de terapia física, se esfuerza por mejorar la calidad de vida de los pacientes a través de práctica basada en evidencia, movimientos funcionales y técnicas de terapia manual. Se educa continuamente en su campo y asiste a cursos especializados para brindar una atención más completa a sus pacientes."
+  },
+  "order": 100,
+  "photo": "/team/daniel-machado.jpg"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Gyasi Azpeitia",
+  "credentials": "OTR/L · Founder",
+  "role": {
+    "en": "Founder & Occupational Therapist",
+    "es": "Fundadora y Terapeuta Ocupacional"
+  },
+  "bio": {
+    "en": "Gyasi graduated from Florida International University in 2003 with a Bachelor of Science degree in Occupational Therapy. She has over 20 years of experience working in and administering outpatient rehabilitation centers. Her passion for her profession and for helping people has made her one of the top Occupational Therapists in Miami.",
+    "es": "Gyasi se graduó de Florida International University en 2003 con una Licenciatura en Ciencias en Terapia Ocupacional. Tiene más de 20 años de experiencia trabajando y administrando centros de rehabilitación ambulatoria. Su pasión por su profesión y por ayudar a las personas la ha convertido en una de las mejores Terapeutas Ocupacionales en Miami."
+  },
+  "order": 130,
+  "founder": true
+}

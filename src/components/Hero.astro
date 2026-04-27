@@ -1,0 +1,111 @@
+---
+import Icon from './Icon.astro';
+import { getCollection } from 'astro:content';
+import { useTranslations, localizedPath, type Lang } from '../i18n/ui';
+import { site } from '../config/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const L = (p: string) => localizedPath(lang, p);
+
+const services = (await getCollection('services', ({ data }) => data.lang === lang))
+  .sort((a, b) => a.data.order - b.data.order);
+// duplicate the list so the marquee loop is seamless
+const marqueeItems = [...services, ...services];
+---
+<section class="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
+  <!-- decorative blobs -->
+  <div aria-hidden="true" class="absolute -top-32 -right-24 h-96 w-96 rounded-full bg-brand-200/40 blur-3xl"></div>
+  <div aria-hidden="true" class="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-accent-200/40 blur-3xl"></div>
+
+  <div class="container-x relative pt-16 pb-20 md:pt-24 md:pb-28 grid lg:grid-cols-12 gap-10 items-center">
+    <div class="lg:col-span-7">
+      <span class="inline-flex items-center gap-2 rounded-full bg-white/80 ring-1 ring-brand-200 px-3 py-1 text-xs font-semibold text-brand-700">
+        <span class="h-1.5 w-1.5 rounded-full bg-accent-500 animate-pulse"></span>
+        {t('hero.eyebrow')}
+      </span>
+      <h1 class="mt-5 text-4xl md:text-6xl font-extrabold tracking-tight text-ink-900">
+        {t('hero.title')}
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-ink-600 leading-relaxed">
+        {t('hero.body')}
+      </p>
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a
+          href={site.locations[0].phoneHref}
+          class="inline-flex items-center gap-2 rounded-full bg-brand-600 px-6 py-3 text-base font-semibold text-white hover:bg-brand-700 transition shadow-lg shadow-brand-900/10"
+        >
+          <Icon name="phone" class="h-5 w-5" />
+          {t('hero.primary')}
+        </a>
+        <a
+          href={L('/services')}
+          class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-base font-semibold text-ink-800 ring-1 ring-ink-200 hover:bg-ink-50 transition"
+        >
+          {t('hero.secondary')}
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      </div>
+
+    </div>
+
+    <div class="lg:col-span-5">
+      <div class="relative aspect-[4/5] w-full max-w-md mx-auto rounded-[var(--radius-card)] overflow-hidden bg-gradient-to-br from-brand-600 via-brand-500 to-brand-700 shadow-2xl shadow-brand-900/20 ring-1 ring-brand-900/10">
+        <div class="absolute inset-0 opacity-30 mix-blend-overlay bg-[radial-gradient(circle_at_30%_20%,white,transparent_50%),radial-gradient(circle_at_70%_80%,white,transparent_40%)]"></div>
+        <div class="absolute bottom-6 left-6 right-6 rounded-2xl bg-white/95 backdrop-blur p-5">
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full bg-accent-100 text-accent-600 flex items-center justify-center">
+              <Icon name="calendar" class="h-5 w-5" />
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-ink-900">
+                {lang === 'es' ? 'Citas la misma semana' : 'Same-week appointments'}
+              </div>
+              <div class="text-xs text-ink-600">
+                {lang === 'es' ? 'Llámanos hoy para reservar' : 'Call today to book your spot'}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services marquee strip -->
+  <div class="relative border-t border-brand-100/70 bg-white/60 backdrop-blur-sm">
+    <div class="container-x py-6">
+      <div
+        class="relative overflow-x-clip overflow-y-visible py-1"
+        style="mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);"
+      >
+          <div class="flex w-max items-center gap-3 animate-[marquee_40s_linear_infinite] hover:[animation-play-state:paused]">
+            {marqueeItems.map((s, i) => (
+              <a
+                href={L(`/services/${s.data.slug}`)}
+                aria-hidden={i >= services.length ? 'true' : undefined}
+                class="group inline-flex items-center gap-2 shrink-0 rounded-full bg-white ring-1 ring-brand-100 px-4 py-2 text-sm font-medium text-ink-800 hover:ring-brand-300 hover:bg-brand-50 transition"
+              >
+                <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-50 text-brand-600 group-hover:bg-white">
+                  <Icon name={s.data.icon} class="h-4 w-4" />
+                </span>
+                <span class="whitespace-nowrap">{s.data.title}</span>
+              </a>
+            ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-\[marquee_40s_linear_infinite\] {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,95 @@
+---
+import Icon from './Icon.astro';
+import { useTranslations, type Lang } from '../i18n/ui';
+import { site } from '../config/site';
+
+interface Props {
+  lang: Lang;
+  withMaps?: boolean;
+  noHeader?: boolean;
+}
+const { lang, withMaps = false, noHeader = false } = Astro.props;
+const t = useTranslations(lang);
+---
+<section id="locations" class="py-20 md:py-28">
+  <div class="container-x">
+    {!noHeader && (
+      <div class="max-w-2xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-ink-900">{t('locations.title')}</h2>
+        <p class="mt-4 text-lg text-ink-600">{t('locations.subtitle')}</p>
+      </div>
+    )}
+
+    <ul class={`${noHeader ? '' : 'mt-12'} grid gap-6 md:grid-cols-2`}>
+      {site.locations.map((loc) => (
+        <li class="rounded-[var(--radius-card)] bg-white ring-1 ring-ink-100 overflow-hidden flex flex-col">
+          {withMaps && (
+            <div class="aspect-[4/3] w-full bg-ink-100">
+              <iframe
+                src={loc.mapEmbed}
+                title={`Map of LIV Active Therapy ${loc.name}`}
+                class="w-full h-full border-0"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+              ></iframe>
+            </div>
+          )}
+          <div class="p-7 flex-1 flex flex-col">
+          <div class="flex items-start justify-between">
+            <div>
+              <h3 class="text-2xl font-bold text-ink-900">{loc.name}</h3>
+              <p class="text-sm text-ink-500">{loc.city}</p>
+            </div>
+            <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+              <Icon name="pin" class="h-5 w-5" />
+            </span>
+          </div>
+
+          <dl class="mt-5 space-y-3 text-sm">
+            <div class="flex gap-3">
+              <dt class="w-24 shrink-0 font-semibold text-ink-700">{t('locations.address')}</dt>
+              <dd class="text-ink-600">{loc.address}</dd>
+            </div>
+            <div class="flex gap-3">
+              <dt class="w-24 shrink-0 font-semibold text-ink-700">{t('locations.phone')}</dt>
+              <dd>
+                <a href={loc.phoneHref} class="text-brand-700 hover:text-brand-800 font-medium">
+                  {loc.phone}
+                </a>
+              </dd>
+            </div>
+            <div class="flex gap-3">
+              <dt class="w-24 shrink-0 font-semibold text-ink-700">{t('locations.hours')}</dt>
+              <dd class="text-ink-600">
+                {site.hours[lang].map((h) => (
+                  <div><span class="font-medium text-ink-700">{h.label}:</span> {h.value}</div>
+                ))}
+              </dd>
+            </div>
+          </dl>
+
+          <div class="mt-6 flex flex-wrap gap-2">
+            <a
+              href={loc.phoneHref}
+              class="inline-flex items-center gap-1.5 rounded-full bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700"
+            >
+              <Icon name="phone" class="h-4 w-4" />
+              {t('cta.call')}
+            </a>
+            <a
+              href={loc.mapsUrl}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-1.5 rounded-full bg-white ring-1 ring-ink-200 px-4 py-2 text-sm font-semibold text-ink-800 hover:bg-ink-50"
+            >
+              <Icon name="pin" class="h-4 w-4" />
+              {t('cta.directions')}
+            </a>
+          </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

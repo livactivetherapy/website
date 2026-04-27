@@ -1,0 +1,14 @@
+{
+  "name": "Alberto Blanco",
+  "credentials": "MSOT",
+  "role": {
+    "en": "Occupational Therapist",
+    "es": "Terapeuta Ocupacional"
+  },
+  "bio": {
+    "en": "Alberto Blanco received his first Master's of Science from FIU in Sports Management with a concentration in Therapeutic Recreation, and his second Master's in Occupational Therapy from the University of St. Augustine. He served as Director of Recreational Therapy for a 100-bed hospital facility, where he tailored and created fitness and wellness programs for patients of all ages. His journey into occupational therapy was influenced by his ability to make meaningful connections and improve overall quality of life. Alberto also has broad knowledge of improving sports-related and orthopedic conditions through functional strength training and therapeutic interventions, while developing and achieving high-level performance outcomes. He is currently finishing his Doctorate in Occupational Therapy and strives to impact and enhance the lives of his patients through evidence-based practice.",
+    "es": "Alberto Blanco recibió su primer Maestría en Ciencias de FIU en Gestión Deportiva con concentración en Recreación Terapéutica, y su segundo Maestría en Terapia Ocupacional de la University of St. Augustine. Se desempeñó como Director de Terapia Recreativa para una instalación hospitalaria de 100 camas, donde adaptó y creó programas de fitness y bienestar para pacientes de todas las edades. Su camino hacia la terapia ocupacional fue influenciado por su capacidad de crear conexiones significativas y mejorar la calidad de vida en general. Alberto también tiene un amplio conocimiento sobre la mejora de condiciones deportivas y ortopédicas a través de entrenamiento funcional de fuerza e intervenciones terapéuticas, mientras desarrolla y alcanza resultados de alto rendimiento. Actualmente está terminando su Doctorado en Terapia Ocupacional y se esfuerza por impactar y mejorar la vida de sus pacientes a través de práctica basada en evidencia."
+  },
+  "order": 120,
+  "photo": "/team/alberto-blanco.jpg"
+}

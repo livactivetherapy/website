@@ -1,0 +1,14 @@
+{
+  "name": "Eduardo Rodriguez",
+  "credentials": "Founder",
+  "role": {
+    "en": "Founder",
+    "es": "Fundador"
+  },
+  "bio": {
+    "en": "Eduardo has run numerous businesses throughout his career and brings a background in strength and conditioning. Having trained numerous athletes and assisted in the recovery of many sports-related injuries, he understands the importance of high-quality rehabilitative care firsthand — Eduardo himself suffered injuries as a young athlete and saw what the right care could do.",
+    "es": "Eduardo ha dirigido numerosos negocios a lo largo de su carrera y aporta experiencia en entrenamiento de fuerza y acondicionamiento. Habiendo entrenado a numerosos atletas y asistido en la recuperación de muchas lesiones deportivas, comprende de primera mano la importancia de una atención rehabilitativa de alta calidad — él mismo sufrió lesiones como joven atleta y vio lo que la atención correcta podía lograr."
+  },
+  "order": 140,
+  "founder": true
+}

@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { useTranslations } from '../../i18n/ui';
+import { site } from '../../config/site';
+
+const t = useTranslations('es');
+---
+<BaseLayout title="Contacto — LIV Active Therapy" lang="es">
+  <section class="container-x pt-16 md:pt-20 pb-20 grid lg:grid-cols-2 gap-14 items-start">
+    <div>
+      <h1 class="text-4xl md:text-5xl font-bold text-ink-900">Contáctanos</h1>
+      <p class="mt-4 text-lg text-ink-600 max-w-md">
+        Respondemos cada mensaje el mismo día hábil. Para citas, llamar es lo más rápido.
+      </p>
+
+      <div class="mt-10 space-y-6">
+        {site.locations.map((loc) => (
+          <div class="rounded-[var(--radius-card)] bg-white p-6 ring-1 ring-ink-100">
+            <div class="flex items-center gap-3">
+              <span class="h-10 w-10 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center">
+                <Icon name="pin" class="h-5 w-5" />
+              </span>
+              <div>
+                <div class="font-semibold text-ink-900">{loc.name}</div>
+                <div class="text-sm text-ink-500">{loc.city}</div>
+              </div>
+            </div>
+            <div class="mt-4 grid sm:grid-cols-2 gap-3 text-sm">
+              <a href={loc.phoneHref} class="inline-flex items-center gap-2 text-brand-700 font-medium">
+                <Icon name="phone" class="h-4 w-4" /> {loc.phone}
+              </a>
+              <span class="inline-flex items-center gap-2 text-ink-600">
+                <Icon name="clock" class="h-4 w-4" />
+                {site.hours.es.map((h) => h.label + ' ' + h.value).join(' · ')}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <form class="rounded-[var(--radius-card)] bg-ink-50 p-7 md:p-8 ring-1 ring-ink-100 space-y-4" action="#">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <label class="block">
+          <span class="text-sm font-semibold text-ink-800">{t('forms.name')}</span>
+          <input type="text" required class="mt-1.5 w-full rounded-lg border-0 bg-white px-4 py-3 text-sm ring-1 ring-ink-200 focus:ring-2 focus:ring-brand-500 outline-none" />
+        </label>
+        <label class="block">
+          <span class="text-sm font-semibold text-ink-800">{t('forms.phone')}</span>
+          <input type="tel" required class="mt-1.5 w-full rounded-lg border-0 bg-white px-4 py-3 text-sm ring-1 ring-ink-200 focus:ring-2 focus:ring-brand-500 outline-none" />
+        </label>
+      </div>
+      <label class="block">
+        <span class="text-sm font-semibold text-ink-800">{t('forms.email')}</span>
+        <input type="email" required class="mt-1.5 w-full rounded-lg border-0 bg-white px-4 py-3 text-sm ring-1 ring-ink-200 focus:ring-2 focus:ring-brand-500 outline-none" />
+      </label>
+      <label class="block">
+        <span class="text-sm font-semibold text-ink-800">{t('forms.message')}</span>
+        <textarea rows="5" required class="mt-1.5 w-full rounded-lg border-0 bg-white px-4 py-3 text-sm ring-1 ring-ink-200 focus:ring-2 focus:ring-brand-500 outline-none resize-y"></textarea>
+      </label>
+      <button
+        type="submit"
+        class="w-full inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-6 py-3 text-base font-semibold text-white hover:bg-brand-700 transition"
+      >
+        {t('forms.submit')}
+        <Icon name="arrow" class="h-4 w-4" />
+      </button>
+      <p class="text-xs text-ink-500">Al enviar, aceptas ser contactado por teléfono o correo sobre tu consulta.</p>
+    </form>
+  </section>
+</BaseLayout>

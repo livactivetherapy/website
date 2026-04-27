@@ -1,0 +1,14 @@
+{
+  "name": "Nelson Perez",
+  "credentials": "PTA",
+  "role": {
+    "en": "Physical Therapist Assistant",
+    "es": "Asistente de Terapia Física"
+  },
+  "bio": {
+    "en": "Nelson Perez is a licensed and registered Physical Therapist Assistant with a strong foundation in patient-centered care. A graduate of Florida National University, he also holds a Bachelor of Science in Natural Science and brings over four years of hands-on experience in physical therapy. Nelson has worked with a wide range of patients, helping individuals recover from orthopedic injuries, neurological conditions, age-related challenges, and sports-related issues. His background also includes seven years of experience as a Phlebotomy Technician in hospitals and clinics, further enriching his understanding of patient care across different healthcare settings. Currently pursuing his Doctor of Physical Therapy degree, Nelson remains deeply dedicated to professional growth and excellence. His goal is to help every patient feel seen, supported, and empowered while not only restoring movement, but also elevating their confidence and quality of life.",
+    "es": "Nelson Perez es un Asistente de Terapia Física licenciado y registrado, con una sólida base en atención centrada en el paciente. Graduado de Florida National University, también posee una Licenciatura en Ciencias Naturales y aporta más de cuatro años de experiencia práctica en terapia física. Nelson ha trabajado con una amplia variedad de pacientes, ayudando a personas a recuperarse de lesiones ortopédicas, condiciones neurológicas, desafíos relacionados con la edad y problemas deportivos. Su trayectoria también incluye siete años de experiencia como Técnico de Flebotomía en hospitales y clínicas, lo que enriquece aún más su comprensión de la atención al paciente en diferentes entornos de salud. Actualmente cursando su Doctorado en Terapia Física, Nelson se mantiene profundamente dedicado al crecimiento profesional y la excelencia. Su objetivo es ayudar a cada paciente a sentirse visto, apoyado y empoderado mientras no solo restaura el movimiento, sino que también eleva su confianza y calidad de vida."
+  },
+  "order": 70,
+  "photo": "/team/nelson-perez.jpg"
+}

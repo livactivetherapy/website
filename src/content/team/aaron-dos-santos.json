@@ -1,0 +1,14 @@
+{
+  "name": "Aaron Dos Santos",
+  "credentials": "PTA",
+  "role": {
+    "en": "Physical Therapist Assistant",
+    "es": "Asistente de Terapia Física"
+  },
+  "bio": {
+    "en": "Aaron earned his Associate of Science degree as a Physical Therapist Assistant from Keiser University in 2020. With a strong foundation in orthopedic care, he specializes in post-operative rehabilitation and return-to-sport therapy, helping patients of all ages regain strength, confidence, and function. Drawing from a lifelong involvement in team sports and coaching, Aaron brings energy, creativity, and relatability to every session. He has a special talent for connecting with his patients and guiding them toward their goals in a way that feels both encouraging and achievable. His experience as a youth volleyball coach enhances his ability to motivate and empower — not only those working to get back to competitive or recreational activities, but also individuals looking to obtain a better quality of life. Aaron is also known for creating a welcoming and positive environment in the clinic. His light-hearted approach is not just effective, but helps patients feel at ease and makes the recovery process more enjoyable.",
+    "es": "Aaron obtuvo su título de Asociado en Ciencias como Asistente de Terapia Física en Keiser University en 2020. Con una sólida base en cuidado ortopédico, se especializa en rehabilitación postoperatoria y terapia de regreso al deporte, ayudando a pacientes de todas las edades a recuperar fuerza, confianza y función. A partir de su participación de toda la vida en deportes de equipo y entrenamiento, Aaron aporta energía, creatividad y cercanía a cada sesión. Tiene un talento especial para conectar con sus pacientes y guiarlos hacia sus metas de una manera que se siente tanto alentadora como alcanzable. Su experiencia como entrenador de voleibol juvenil mejora su capacidad de motivar y empoderar — no solo a quienes buscan regresar a actividades competitivas o recreativas, sino también a personas que buscan una mejor calidad de vida. Aaron también es conocido por crear un ambiente acogedor y positivo en la clínica. Su enfoque alegre no solo es efectivo, sino que ayuda a los pacientes a sentirse cómodos y hace que el proceso de recuperación sea más agradable."
+  },
+  "order": 110,
+  "photo": "/team/aaron-dos-santos.jpg"
+}

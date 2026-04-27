@@ -1,0 +1,16 @@
+---
+interface Props {
+  class?: string;
+  invert?: boolean;
+}
+const { class: cls = 'h-9 w-auto', invert = false } = Astro.props;
+---
+<img
+  src="/logo.png"
+  alt="LIV Active Therapy Center"
+  class={`${cls} ${invert ? 'invert brightness-200' : ''}`}
+  width="2587"
+  height="766"
+  loading="eager"
+  decoding="async"
+/>

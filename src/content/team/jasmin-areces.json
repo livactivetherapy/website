@@ -1,0 +1,14 @@
+{
+  "name": "Jasmin Areces",
+  "credentials": "MSOT",
+  "role": {
+    "en": "Occupational Therapist",
+    "es": "Terapeuta Ocupacional"
+  },
+  "bio": {
+    "en": "Jasmin is a registered and licensed Occupational Therapist who received her Master's in Occupational Therapy at the University of St. Augustine for Health Sciences, where she graduated with honors. Before beginning her master's, Jasmin graduated with honors from Florida International University with a bachelor's degree in Recreational Sport Management. She decided to pursue a career in orthopedic rehabilitation while volunteering at local therapy centers. Jasmin strives to help others regain independence in their daily activities while using a variety of therapeutic exercises and activities to further improve their quality of life. In her spare time, Jasmin enjoys traveling, watching movies, and spending time with her closest friends and family. As a therapist, her goal is to provide each client with an individualized treatment plan based on their personal goals, while using evidence-based practice.",
+    "es": "Jasmin es una Terapeuta Ocupacional registrada y licenciada que recibió su Maestría en Terapia Ocupacional en la University of St. Augustine for Health Sciences, donde se graduó con honores. Antes de comenzar su maestría, Jasmin se graduó con honores de Florida International University con una licenciatura en Gestión Deportiva Recreativa. Decidió seguir una carrera en rehabilitación ortopédica mientras hacía voluntariado en centros de terapia locales. Jasmin se esfuerza por ayudar a otros a recuperar la independencia en sus actividades diarias utilizando una variedad de ejercicios y actividades terapéuticas para mejorar aún más su calidad de vida. En su tiempo libre, disfruta viajar, ver películas y pasar tiempo con sus amigos y familia más cercanos. Como terapeuta, su meta es brindar a cada cliente un plan de tratamiento individualizado basado en sus metas personales, utilizando práctica basada en evidencia."
+  },
+  "order": 80,
+  "photo": "/team/jasmin-areces.jpg"
+}

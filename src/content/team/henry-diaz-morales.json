@@ -1,0 +1,14 @@
+{
+  "name": "Henry Diaz-Morales",
+  "credentials": "PTA",
+  "role": {
+    "en": "Physical Therapist Assistant",
+    "es": "Asistente de Terapia Física"
+  },
+  "bio": {
+    "en": "Henry is a licensed Physical Therapist Assistant who earned his Associate of Science degree from Keiser University in 2021. That same year, he also became certified in manual lymphatic drainage techniques, expanding his skill set to better support patients in their recovery journeys. Henry's passion for physical therapy began with a personal experience while recovering from a sports-related back injury — a process through which he witnessed the profound impact physical therapy can have not only on the body, but on a person's confidence, independence, and overall well-being. Today, Henry brings that same empathy and understanding to every session. Whether you're recovering from an injury or looking to regain strength and mobility, Henry is committed to helping his patients return to the activities they love through compassion, encouragement, and guidance every step of the way.",
+    "es": "Henry es un Asistente de Terapia Física licenciado que obtuvo su título de Asociado en Ciencias en Keiser University en 2021. Ese mismo año, también se certificó en técnicas de drenaje linfático manual, expandiendo sus habilidades para apoyar mejor a los pacientes en su recuperación. La pasión de Henry por la terapia física comenzó con una experiencia personal mientras se recuperaba de una lesión de espalda relacionada con el deporte — un proceso a través del cual fue testigo del profundo impacto que la terapia física puede tener no solo en el cuerpo, sino en la confianza, la independencia y el bienestar general de una persona. Hoy, Henry aporta esa misma empatía y comprensión a cada sesión. Ya sea que te estés recuperando de una lesión o buscando recuperar fuerza y movilidad, Henry está comprometido a ayudar a sus pacientes a regresar a las actividades que aman a través de compasión, aliento y guía en cada paso del camino."
+  },
+  "order": 60,
+  "photo": "/team/henry-diaz-morales.jpg"
+}

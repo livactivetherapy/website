@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import TeamPreview from '../components/TeamPreview.astro';
+---
+<BaseLayout title="Our Team — LIV Active Therapy" lang="en">
+  <PageHero eyebrow="Our team" subtitle="Hand-picked therapists. Combined decades of experience. One shared philosophy of care.">
+    The team behind <span class="text-brand-600 italic">your</span> recovery.
+  </PageHero>
+  <TeamPreview lang="en" noHeader />
+</BaseLayout>

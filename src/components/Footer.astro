@@ -1,0 +1,148 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { getCollection } from 'astro:content';
+import { useTranslations, localizedPath, type Lang } from '../i18n/ui';
+import { site } from '../config/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const L = (p: string) => localizedPath(lang, p);
+const year = new Date().getFullYear();
+
+const services = (await getCollection('services', ({ data }) => data.lang === lang))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<footer class="mt-24 relative overflow-hidden bg-gradient-to-b from-white via-brand-50/30 to-brand-50/60 border-t border-ink-100">
+  <!-- subtle decorative element -->
+  <div aria-hidden="true" class="pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full bg-brand-100/40 blur-3xl"></div>
+  <div aria-hidden="true" class="pointer-events-none absolute bottom-0 -left-24 h-72 w-72 rounded-full bg-accent-100/30 blur-3xl"></div>
+
+  <!-- 4 even columns -->
+  <div class="container-x relative pt-16 pb-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+
+    <!-- About column -->
+    <div>
+      <Logo class="h-12 w-auto" />
+      <p class="mt-5 text-sm leading-relaxed text-ink-600">
+        {t('footer.about')}
+      </p>
+      <div class="mt-5 flex items-center gap-2.5">
+        <a
+          href={site.social.instagram}
+          aria-label="Instagram"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white ring-1 ring-ink-200 text-ink-700 hover:bg-brand-50 hover:ring-brand-300 hover:text-brand-700 transition"
+        >
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+          </svg>
+        </a>
+        <a
+          href={site.social.facebook}
+          aria-label="Facebook"
+          class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white ring-1 ring-ink-200 text-ink-700 hover:bg-brand-50 hover:ring-brand-300 hover:text-brand-700 transition"
+        >
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M22 12a10 10 0 1 0-11.56 9.88V14.9H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 2.9h-2.33v6.98A10 10 0 0 0 22 12z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div>
+      <h4 class="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
+        {t('footer.navigation')}
+      </h4>
+      <ul class="mt-5 space-y-3 text-sm">
+        <li><a class="text-ink-700 hover:text-brand-700 font-medium" href={L('/')}>{t('nav.home')}</a></li>
+        <li><a class="text-ink-700 hover:text-brand-700 font-medium" href={L('/about')}>{t('nav.about')}</a></li>
+        <li><a class="text-ink-700 hover:text-brand-700 font-medium" href={L('/team')}>{t('nav.team')}</a></li>
+        <li><a class="text-ink-700 hover:text-brand-700 font-medium" href={L('/locations')}>{t('nav.locations')}</a></li>
+        <li><a class="text-ink-700 hover:text-brand-700 font-medium" href={L('/contact')}>{t('nav.contact')}</a></li>
+      </ul>
+    </div>
+
+    <!-- Services -->
+    <div>
+      <h4 class="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
+        <a href={L('/services')} class="hover:text-brand-800">{t('nav.services')}</a>
+      </h4>
+      <ul class="mt-5 space-y-3 text-sm">
+        {services.map((s) => (
+          <li>
+            <a class="text-ink-700 hover:text-brand-700 font-medium" href={L(`/services/${s.data.slug}`)}>
+              {s.data.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Visit us -->
+    <div>
+      <h4 class="text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
+        {t('footer.visitUs')}
+      </h4>
+      <ul class="mt-5 space-y-4">
+        {site.locations.map((loc) => (
+          <li>
+            <div class="flex items-center gap-2">
+              <Icon name="pin" class="h-4 w-4 text-brand-600" />
+              <span class="text-sm font-bold text-ink-900">{loc.name}</span>
+            </div>
+            <a
+              href={loc.mapsUrl}
+              target="_blank"
+              rel="noopener"
+              class="mt-1.5 block text-xs leading-relaxed text-ink-600 hover:text-brand-700"
+            >
+              {loc.address}<br />{loc.city}
+            </a>
+            <a
+              href={loc.phoneHref}
+              class="mt-1.5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-800"
+            >
+              <Icon name="phone" class="h-3.5 w-3.5" />
+              {loc.phone}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Horizontal info bar -->
+  <div class="relative border-t border-ink-200/60">
+    <div class="container-x py-5 flex flex-col md:flex-row md:items-center md:justify-center gap-4 md:gap-8 text-xs text-ink-600">
+      <div class="flex items-center gap-2">
+        <Icon name="clock" class="h-4 w-4 text-brand-600" />
+        <span class="font-semibold uppercase tracking-wider text-ink-500">{t('footer.hours')}:</span>
+        {site.hours[lang].map((h, i) => (
+          <span class="ml-1">
+            {i > 0 && <span class="text-ink-300 mr-2">·</span>}
+            <span class="font-medium text-ink-800">{h.label}</span>
+            <span class="ml-1">{h.value}</span>
+          </span>
+        ))}
+      </div>
+      <div class="hidden md:block h-4 w-px bg-ink-200"></div>
+      <div class="flex items-center gap-2">
+        <Icon name="phone" class="h-4 w-4 text-brand-600" />
+        <span class="font-semibold uppercase tracking-wider text-ink-500">{t('footer.fax')}:</span>
+        <span class="font-medium text-ink-800">{site.fax}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="relative border-t border-ink-200/70 bg-white/40">
+    <div class="container-x py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-ink-500">
+      <span>&copy; {year} {site.name}. {t('footer.rights')}</span>
+      <span class="font-semibold text-brand-700 tracking-wide">{t('footer.tagline')}</span>
+    </div>
+  </div>
+</footer>

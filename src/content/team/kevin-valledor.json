@@ -1,0 +1,14 @@
+{
+  "name": "Kevin Valledor, DPT",
+  "credentials": "DPT",
+  "role": {
+    "en": "Physical Therapist",
+    "es": "Terapeuta Físico"
+  },
+  "bio": {
+    "en": "Dr. Kevin Valledor earned his Doctorate in Physical Therapy from the University of St. Augustine for Health Sciences in 2024, following a Bachelor of Science in Athletic Training from Florida State University. As a lifelong athlete with a deep-rooted passion for basketball, Dr. Valledor brings a unique perspective to the rehabilitation process — blending clinical knowledge with firsthand understanding of athletic performance and recovery. Kevin is known for his compassionate approach and commitment to personalized care. He uses a combination of manual therapy and movement-based interventions to help individuals restore strength, improve mobility, and regain confidence in their bodies. Whether you're healing from an injury or striving to reach your peak performance, Kevin is dedicated to guiding you every step of the way with empathy, expertise, and encouragement.",
+    "es": "El Dr. Kevin Valledor obtuvo su Doctorado en Terapia Física en la University of St. Augustine for Health Sciences en 2024, después de una Licenciatura en Entrenamiento Atlético en Florida State University. Como atleta de toda la vida y con una profunda pasión por el baloncesto, el Dr. Valledor aporta una perspectiva única al proceso de rehabilitación, combinando conocimiento clínico con un entendimiento de primera mano del rendimiento atlético y la recuperación. Kevin es conocido por su enfoque compasivo y su compromiso con la atención personalizada. Utiliza una combinación de terapia manual e intervenciones basadas en el movimiento para ayudar a las personas a restaurar la fuerza, mejorar la movilidad y recuperar la confianza en sus cuerpos. Ya sea que te estés recuperando de una lesión o buscando alcanzar tu máximo rendimiento, Kevin está dedicado a guiarte en cada paso con empatía, experiencia y aliento."
+  },
+  "order": 20,
+  "photo": "/team/kevin-valledor.jpg"
+}
