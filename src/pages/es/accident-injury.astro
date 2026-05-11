@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import LocationsPreview from '../../components/LocationsPreview.astro';
+import { site } from '../../config/site';
+
+const primaryPhone = site.locations[0].phoneHref;
+const primaryPhoneLabel = site.locations[0].phone;
+
+const conditions = [
+  { icon: 'pulse',    title: 'Cuello y latigazo cervical',  body: 'Lesiones comunes tras colisiones e impactos súbitos.' },
+  { icon: 'activity', title: 'Espalda y columna',            body: 'Desde hernias discales hasta esguinces lumbares por caídas.' },
+  { icon: 'hand',     title: 'Hombro, muñeca y mano',        body: 'Lesiones por impacto o al amortiguar una caída.' },
+  { icon: 'target',   title: 'Cadera, rodilla y tobillo',    body: 'Lesiones articulares comunes en resbalones y caídas.' },
+  { icon: 'ribbon',   title: 'Tejido blando y esguinces',    body: 'Lesiones musculares, tendinosas y ligamentarias.' },
+  { icon: 'trophy',   title: 'Post-conmoción cerebral',      body: 'Terapia vestibular y de equilibrio tras lesiones craneales.' },
+];
+
+const howWeHelp = [
+  { icon: 'calendar', title: 'Citas la misma semana',         body: 'Programación rápida — la mayoría de pacientes son evaluados a los pocos días del accidente.' },
+  { icon: 'hand',     title: 'Tratamiento personalizado',    body: 'Un plan diseñado por el terapeuta y adaptado a tus lesiones — ajustado a medida que avanza tu recuperación.' },
+  { icon: 'check',    title: 'Atención coordinada',           body: 'Nos comunicamos directamente con tus médicos referentes y tu equipo médico.' },
+  { icon: 'globe',    title: 'Atención bilingüe',             body: 'Sesiones y documentación en español e inglés — para ti y tus clientes.' },
+];
+---
+<BaseLayout
+  title="Lesiones por Accidente Auto o Caída — LIV Active Therapy Miami"
+  description="¿Lesionado en un accidente de auto o resbalón y caída? LIV Active Therapy ofrece terapia física y ocupacional personalizada para lesiones por accidentes en Miami — Kendall y Doral."
+  lang="es"
+>
+  <PageHero
+    eyebrow="Accidentes de auto · Resbalones y caídas"
+    subtitle="Terapia física y ocupacional para lesiones por accidentes — en Kendall y Doral. Tratamiento personalizado, atención coordinada con tu equipo médico y legal, y citas la misma semana."
+  >
+    ¿Accidente o caída? <span class="text-brand-600 italic">Te ayudamos.</span>
+  </PageHero>
+
+  <section class="bg-brand-50/40 border-y border-brand-100">
+    <div class="container-x py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="text-sm md:text-base text-ink-700">
+        <span class="font-semibold text-ink-900">¿Lesión reciente?</span> Llámanos hoy — te programamos esta misma semana.
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a
+          href={primaryPhone}
+          class="inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 transition shadow-sm"
+        >
+          <Icon name="phone" class="h-4 w-4" />
+          {primaryPhoneLabel}
+        </a>
+        <a
+          href="/es/contact"
+          class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-ink-200 px-5 py-2.5 text-sm font-semibold text-ink-800 hover:bg-ink-50 transition"
+        >
+          Enviar mensaje
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white py-20 md:py-24">
+    <div class="container-x">
+      <div class="mx-auto max-w-3xl text-center">
+        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+          <span class="h-px w-8 bg-brand-300"></span>
+          Qué tratamos
+          <span class="h-px w-8 bg-brand-300"></span>
+        </span>
+        <h2 class="mt-4 text-4xl md:text-5xl font-bold tracking-tight text-ink-900 leading-[1.05]">
+          Lesiones por accidente que <span class="text-brand-600 italic">rehabilitamos</span>.
+        </h2>
+        <p class="mt-5 text-base md:text-lg text-ink-700 leading-relaxed">
+          Ya sea por una colisión de tráfico o una caída en una tienda, tratamos toda la gama de lesiones de tejido blando, articulares y post-conmoción que pueden resultar.
+        </p>
+      </div>
+
+      <ul class="mx-auto mt-14 max-w-5xl grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {conditions.map((c) => (
+          <li class="group rounded-2xl bg-white ring-1 ring-ink-100 p-6 hover:ring-brand-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-900/5 transition-all">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+              <Icon name={c.icon} class="h-6 w-6" />
+            </div>
+            <h3 class="mt-4 text-lg font-bold text-ink-900 tracking-tight">{c.title}</h3>
+            <p class="mt-2 text-sm text-ink-600 leading-relaxed">{c.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-white py-20 md:py-24 border-t border-ink-100">
+    <div class="container-x">
+      <div class="mx-auto max-w-3xl text-center">
+        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+          <span class="h-px w-8 bg-brand-300"></span>
+          Cómo te ayudamos
+          <span class="h-px w-8 bg-brand-300"></span>
+        </span>
+        <h2 class="mt-4 text-4xl md:text-5xl font-bold tracking-tight text-ink-900 leading-[1.05]">
+          Recuperación <span class="text-brand-600 italic">acelerada</span>.
+        </h2>
+        <p class="mt-5 text-base md:text-lg text-ink-700 leading-relaxed">
+          Actuamos rápido después de un accidente — cada día cuenta para tu recuperación y para cualquier caso que tu abogado esté preparando.
+        </p>
+      </div>
+
+      <ul class="mx-auto mt-14 max-w-5xl grid gap-10 md:grid-cols-2 md:gap-x-12 md:gap-y-12">
+        {howWeHelp.map((g, i) => {
+          const isAccent = i % 2 === 1;
+          const iconBg   = isAccent ? 'bg-accent-50' : 'bg-brand-50';
+          const iconText = isAccent ? 'text-accent-600' : 'text-brand-600';
+          const dotBg    = isAccent ? 'bg-accent-500' : 'bg-brand-500';
+          return (
+            <li class="group flex items-start gap-6">
+              <div class="relative shrink-0">
+                <div class={`relative inline-flex h-14 w-14 items-center justify-center rounded-full ${iconBg} ${iconText} ring-1 ring-white shadow-sm`}>
+                  <Icon name={g.icon} class="h-6 w-6" />
+                </div>
+                <span aria-hidden="true" class={`absolute -bottom-1 -right-1 h-3 w-3 rounded-full ${dotBg} ring-2 ring-white`}></span>
+              </div>
+              <div class="min-w-0 flex-1 pt-1">
+                <h3 class="text-xl font-bold text-ink-900 tracking-tight">{g.title}</h3>
+                <p class="mt-2 text-base text-ink-600 leading-relaxed">{g.body}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <section class="py-20 md:py-24 bg-gradient-to-br from-brand-900 via-brand-800 to-brand-950 relative overflow-hidden">
+    <div aria-hidden="true" class="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-brand-500/20 blur-3xl"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-accent-400/15 blur-3xl"></div>
+
+    <div class="container-x relative">
+      <div class="mx-auto max-w-3xl text-center text-white">
+        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-200">
+          <span class="h-px w-8 bg-brand-400"></span>
+          Abogados referentes
+          <span class="h-px w-8 bg-brand-400"></span>
+        </span>
+        <h2 class="mt-4 text-4xl md:text-5xl font-bold tracking-tight leading-[1.05]">
+          Trabajando con tu <span class="text-accent-300 italic">equipo legal</span>.
+        </h2>
+        <p class="mt-5 text-base md:text-lg text-brand-100/90 leading-relaxed">
+          Tratamos regularmente a clientes referidos por abogados de lesiones personales en todo el sur de Florida. Nuestros terapeutas coordinan estrechamente con equipos médicos y legales desde la evaluación inicial hasta el alta.
+        </p>
+      </div>
+
+      <ul class="mx-auto mt-14 max-w-4xl grid gap-4 sm:grid-cols-2">
+        {[
+          { title: 'Documentación detallada', body: 'Notas de progreso y registros de tratamiento disponibles durante todo el caso.' },
+          { title: 'Coordinación directa',    body: 'Nos comunicamos directamente con tu oficina y el proveedor médico referente.' },
+          { title: 'Evaluaciones aceleradas', body: 'Nuevos referidos atendidos en días — no semanas.' },
+          { title: 'Atención bilingüe',       body: 'Atención completa en español e inglés para tus clientes hispanohablantes.' },
+        ].map((b) => (
+          <li class="flex items-start gap-3 rounded-2xl bg-white/5 ring-1 ring-white/10 backdrop-blur p-5">
+            <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent-400/20 text-accent-300">
+              <Icon name="check" class="h-4 w-4" />
+            </span>
+            <div>
+              <div class="text-base font-bold text-white">{b.title}</div>
+              <div class="mt-1 text-sm text-brand-100/80 leading-relaxed">{b.body}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-12 text-center">
+        <a
+          href={primaryPhone}
+          class="inline-flex items-center gap-2 rounded-full bg-white text-brand-900 px-6 py-3 text-base font-semibold hover:bg-brand-50 transition shadow-md"
+        >
+          <Icon name="phone" class="h-5 w-5" />
+          Refiere a un cliente · {primaryPhoneLabel}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white border-t border-ink-100">
+    <div class="container-x pt-20 md:pt-24">
+      <div class="mx-auto max-w-3xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-ink-900">
+          Dos ubicaciones en Miami, listas para atenderte.
+        </h2>
+        <p class="mt-4 text-base md:text-lg text-ink-700">
+          La mayoría de pacientes son programados la misma semana. Llámanos o envíanos un mensaje — del resto nos encargamos nosotros.
+        </p>
+      </div>
+    </div>
+    <LocationsPreview lang="es" withMaps noHeader />
+  </section>
+</BaseLayout>

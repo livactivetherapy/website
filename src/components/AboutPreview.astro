@@ -1,0 +1,54 @@
+---
+import Icon from './Icon.astro';
+import { localizedPath, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const L = (p: string) => localizedPath(lang, p);
+
+const copy = lang === 'es'
+  ? {
+      eyebrow: 'Sobre nosotros',
+      title: 'Conoce a LIV Active Therapy Center',
+      p1: 'En LIV Active Therapy Center, contratamos a terapeutas ocupacionales y físicos seleccionados exclusivamente no solo por su experiencia, conocimiento y habilidades, sino también por su dedicación, compasión y motivación para garantizar resultados y satisfacción óptimos del paciente.',
+      p2: 'Cada terapeuta está capacitado bajo la filosofía de LIV Active Therapy Center de mejorar la función, movilidad, fuerza y estabilidad óptimas mediante un enfoque sistemático que utiliza técnicas de tratamiento y estrategias de intervención específicas.',
+      p3: 'Al finalizar la evaluación inicial, se documentan los déficits funcionales junto con los objetivos del paciente para crear un plan de intervención individualizado. Los planes incluyen educación al paciente, actividades y ejercicios terapéuticos, terapia manual, estiramientos y modalidades según sea necesario.',
+      cta: 'Más sobre nosotros',
+    }
+  : {
+      eyebrow: 'About us',
+      title: 'Meet LIV Active Therapy Center',
+      p1: 'At LIV Active Therapy Center, we hire occupational and physical therapists who have been exclusively selected not only for their experience, knowledge and skills, but for their dedication, compassion and motivation to ensure optimal patient outcomes and satisfaction.',
+      p2: 'Each therapist is trained in accordance with LIV Active Therapy Center’s philosophy of improving optimal function, mobility, strength, and stability in a systematic approach using specific treatment techniques and intervention strategies.',
+      p3: 'Upon completion of the initial evaluation, the functional deficits are documented along with the patient’s goals to create an individualized intervention plan. Intervention plans consist of patient education, therapeutic activities and exercises, manual therapy, stretching, and modalities as needed.',
+      cta: 'Learn more about us',
+    };
+---
+<section class="relative bg-gradient-to-b from-white to-brand-50/40 py-14 md:py-20">
+  <div class="container-x">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+        <span class="h-px w-8 bg-brand-300"></span>
+        {copy.eyebrow}
+        <span class="h-px w-8 bg-brand-300"></span>
+      </span>
+      <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-ink-900">
+        {copy.title}
+      </h2>
+      <div class="mt-6 space-y-4 text-base md:text-lg text-ink-700 leading-relaxed text-left md:text-center">
+        <p>{copy.p1}</p>
+        <p>{copy.p2}</p>
+        <p>{copy.p3}</p>
+      </div>
+      <div class="mt-8">
+        <a
+          href={L('/about')}
+          class="inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 transition shadow-sm"
+        >
+          {copy.cta}
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

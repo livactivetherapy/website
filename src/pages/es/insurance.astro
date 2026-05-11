@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import { insurances } from '../../data/insurances';
+import { site } from '../../config/site';
+
+const primaryPhone = site.locations[0].phoneHref;
+const primaryPhoneLabel = site.locations[0].phone;
+---
+<BaseLayout
+  title="Seguros Aceptados — LIV Active Therapy"
+  description="LIV Active Therapy acepta la mayoría de los seguros, incluyendo Aetna, BCBS, Florida Blue, Cigna, Humana, United Healthcare, Medicare, Tricare y más."
+  lang="es"
+>
+  <PageHero eyebrow="Seguros" subtitle="Aceptamos la mayoría de los seguros médicos — incluyendo Medicare, planes comerciales, auto (PIP) y compensación laboral. Si no ves tu plan en la lista, llámanos y lo verificamos.">
+    Seguros <span class="text-brand-600 italic">aceptados</span>.
+  </PageHero>
+
+  <section class="bg-white py-16 md:py-20">
+    <div class="container-x">
+      <ul class="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        {insurances.map((name) => (
+          <li class="group flex items-center gap-3 rounded-xl bg-white ring-1 ring-ink-100 px-4 py-3 hover:ring-brand-300 hover:bg-brand-50/40 transition">
+            <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700 group-hover:bg-brand-600 group-hover:text-white transition-colors">
+              <Icon name="check" class="h-4 w-4" />
+            </span>
+            <span class="text-sm font-semibold text-ink-800 leading-tight">{name}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-12 rounded-[2rem] bg-gradient-to-br from-brand-700 via-brand-600 to-brand-800 px-8 py-12 md:px-12 md:py-16 text-white shadow-xl shadow-brand-900/20 relative overflow-hidden">
+        <div aria-hidden="true" class="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
+        <div aria-hidden="true" class="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-accent-400/30 blur-3xl"></div>
+
+        <div class="relative mx-auto max-w-2xl text-center">
+          <div class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/20 backdrop-blur">
+            <Icon name="phone" class="h-7 w-7 text-white" />
+          </div>
+          <span class="mt-5 block text-xs font-bold uppercase tracking-[0.22em] text-brand-200">
+            ¿No ves tu plan?
+          </span>
+          <h2 class="mt-3 text-3xl md:text-4xl font-bold tracking-tight leading-tight">
+            Verificamos tu cobertura en minutos.
+          </h2>
+          <p class="mt-4 text-brand-100/90 leading-relaxed">
+            Trabajamos con planes adicionales que no aparecen en la lista, además de opciones de pago directo. Nuestra recepción puede confirmar tus beneficios antes de tu primera cita.
+          </p>
+
+          <div class="mt-7 flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-brand-100">
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-white/10 ring-1 ring-white/20 px-3 py-1.5">
+              <Icon name="check" class="h-3.5 w-3.5 text-accent-300" />
+              25+ planes aceptados
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-white/10 ring-1 ring-white/20 px-3 py-1.5">
+              <Icon name="globe" class="h-3.5 w-3.5 text-accent-300" />
+              Atención bilingüe
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-white/10 ring-1 ring-white/20 px-3 py-1.5">
+              <Icon name="clock" class="h-3.5 w-3.5 text-accent-300" />
+              Verificación el mismo día
+            </span>
+          </div>
+
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href={primaryPhone}
+              class="inline-flex items-center gap-2 rounded-full bg-white text-brand-900 px-6 py-3 text-sm font-semibold hover:bg-brand-50 transition shadow-md"
+            >
+              <Icon name="phone" class="h-4 w-4" />
+              {primaryPhoneLabel}
+            </a>
+            <a
+              href="/es/contact"
+              class="inline-flex items-center gap-2 rounded-full bg-brand-900/40 ring-1 ring-white/30 text-white px-6 py-3 text-sm font-semibold hover:bg-brand-900/60 transition"
+            >
+              Enviar mensaje
+              <Icon name="arrow" class="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

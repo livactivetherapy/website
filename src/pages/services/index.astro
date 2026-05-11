@@ -2,6 +2,113 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/PageHero.astro';
 import ServicesGrid from '../../components/ServicesGrid.astro';
+import Icon from '../../components/Icon.astro';
+
+const orthoCategories = [
+  {
+    icon: 'hand',
+    name: 'Wrist / Hand',
+    tint: 'brand',
+    procedures: [
+      'Open Reduction & Internal Fixation (ORIF)',
+      'Carpal ligament repairs',
+      'Flexor / Extensor tendon repairs',
+      'Carpal tunnel release',
+      "Dupuytren's release",
+      'De Quervain release',
+      'Trigger finger release',
+      'Ganglion cyst removal',
+    ],
+  },
+  {
+    icon: 'activity',
+    name: 'Shoulder / Elbow',
+    tint: 'accent',
+    procedures: [
+      'Arthroscopy',
+      'Rotator cuff repair',
+      'Labral repairs',
+      'Bicep repair',
+      'Shoulder replacement',
+      'Ulnar collateral ligament reconstruction',
+      'Open Reduction & Internal Fixation (ORIF)',
+    ],
+  },
+  {
+    icon: 'target',
+    name: 'Hip / Knee',
+    tint: 'accent',
+    procedures: [
+      'Arthroscopy',
+      'Meniscectomy / Meniscal repairs',
+      'ACL / PCL repairs',
+      'Debridement',
+      'Knee replacements',
+      'Labral repairs',
+      'CAM / PINCER debridement',
+      'Hip replacements',
+    ],
+  },
+  {
+    icon: 'pulse',
+    name: 'Spine',
+    tint: 'brand',
+    procedures: [
+      'Fusions',
+      'Microdiscectomy',
+    ],
+  },
+];
+
+const postSurgicalGoals = [
+  {
+    icon: 'ribbon',
+    title: 'Tissue healing',
+    body: 'Promote proper tissue healing and minimize the development of scar tissue — a common impairment following surgery.',
+  },
+  {
+    icon: 'activity',
+    title: 'Joint & tissue mobility',
+    body: 'Restore mobility through the surrounding joints and tissue, which is crucial to regaining proper form and functional movement.',
+  },
+  {
+    icon: 'pulse',
+    title: 'Neuromuscular timing',
+    body: 'Retrain the timing of muscles that shut down after surgery — yielding stability, faster recovery, and less compensatory patterning.',
+  },
+  {
+    icon: 'trophy',
+    title: 'Strength & endurance',
+    body: 'Rebuild functional strength and endurance so you can return to the activities — and the life — you had before surgery.',
+  },
+];
+
+const stretchingTechniques = [
+  {
+    n: '01',
+    title: 'Ballistic',
+    body: 'Your content goes here. Edit or remove this text inline or in the module Content settings. You can also style every aspect of this content in the module Design settings and even apply custom CSS to this text in the module Advanced settings.',
+    tint: 'brand',
+  },
+  {
+    n: '02',
+    title: 'Dynamic',
+    body: 'Dynamic stretching involves stretching with motion and gradually varying the speed and distance of the movement. These movements are completed in a very slow and controlled manner. Common examples are leg swings, arm swings, and torso swings — typically beneficial when included in a warm-up routine.',
+    tint: 'accent',
+  },
+  {
+    n: '03',
+    title: 'Static',
+    body: 'Static stretching involves stretching the muscle until gentle tension is felt and then holding for a prescribed period of time, usually around 30 seconds. This is what is typically considered when people discuss stretching.',
+    tint: 'accent',
+  },
+  {
+    n: '04',
+    title: 'Low Load · Long Duration',
+    body: 'A gradual application of tension is added over time, with the purpose of connective tissue remodeling and improved range of motion (ROM).',
+    tint: 'brand',
+  },
+];
 ---
 <BaseLayout
   title="Services — LIV Active Therapy"
@@ -12,4 +119,218 @@ import ServicesGrid from '../../components/ServicesGrid.astro';
     Therapies built around <span class="text-brand-600 italic">you</span>.
   </PageHero>
   <ServicesGrid lang="en" noHeader />
+
+  <!-- Stretching activities & techniques -->
+  <section class="relative bg-white py-20 md:py-28">
+    <div class="container-x relative">
+      <!-- Intro + 4 technique cards -->
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div class="lg:col-span-5 lg:sticky lg:top-24">
+          <span class="text-xs font-bold uppercase tracking-[0.22em] text-brand-700">Stretching</span>
+          <h2 class="mt-3 text-4xl md:text-6xl font-bold tracking-tight text-ink-900 leading-[1.02]">
+            Stretch with <span class="text-brand-600 italic">purpose</span>.
+          </h2>
+          <p class="mt-5 text-base md:text-lg text-ink-700 leading-relaxed">
+            One of the most essential habits for the body — when done deliberately. Stretching improves flexibility, mobility, circulation, energy, and recovery, while reducing soreness and lowering injury risk.
+          </p>
+          <div class="mt-7 flex flex-wrap gap-2">
+            {['Flexibility', 'Mobility', 'Circulation', 'Recovery', 'Injury prevention'].map((b) => (
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-white ring-1 ring-brand-100 px-3 py-1.5 text-xs font-semibold text-brand-800">
+                <Icon name="check" class="h-3.5 w-3.5 text-brand-600" />
+                {b}
+              </span>
+            ))}
+          </div>
+          <div class="mt-8 space-y-4 border-t border-brand-100 pt-6">
+            <p class="text-base text-ink-700 leading-relaxed">
+              During your initial evaluation, your therapist conducts a detailed assessment of your mobility and flexibility — then builds a stretch program tailored to your goals, with the right techniques mixed into every session.
+            </p>
+            <p class="text-sm text-ink-500 leading-relaxed">
+              Stretching without proper mechanics, or using the wrong technique for your body, can cause tears, hypermobility, instability, or damage to tendons and ligaments. The technique matters as much as the stretch itself.
+            </p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7">
+          <div class="grid gap-5 sm:grid-cols-2">
+            {stretchingTechniques.map((tech) => {
+              const isAccent = tech.tint === 'accent';
+              const numberColor = isAccent ? 'text-accent-300 group-hover:text-accent-400' : 'text-brand-200 group-hover:text-brand-300';
+              const ringColor   = isAccent ? 'hover:ring-accent-300' : 'hover:ring-brand-300';
+              const dotColor    = isAccent ? 'bg-accent-500' : 'bg-brand-500';
+              return (
+                <div class={`group relative overflow-hidden rounded-2xl bg-white ring-1 ring-ink-100 ${ringColor} p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-900/10`}>
+                  <div class={`text-6xl font-display font-extrabold leading-none ${numberColor} transition-colors`}>
+                    {tech.n}
+                  </div>
+                  <div class="mt-4 flex items-center gap-2.5">
+                    <span class={`h-1.5 w-1.5 rounded-full ${dotColor}`}></span>
+                    <h4 class="text-lg font-bold text-ink-900 tracking-tight">{tech.title} stretching</h4>
+                  </div>
+                  <p class="mt-2 text-sm text-ink-600 leading-relaxed">{tech.body}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Post-surgical rehabilitation — vertical recovery timeline -->
+  <section class="relative bg-white py-20 md:py-28 border-t border-ink-100">
+    <div class="container-x relative">
+      <!-- Centered heading -->
+      <div class="mx-auto max-w-3xl text-center">
+        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+          <span class="h-px w-8 bg-brand-300"></span>
+          Post-surgical rehab
+          <span class="h-px w-8 bg-brand-300"></span>
+        </span>
+        <h2 class="mt-4 text-4xl md:text-6xl font-bold tracking-tight text-ink-900 leading-[1.02]">
+          From surgery to <span class="text-brand-600 italic">strength</span>.
+        </h2>
+        <p class="mt-5 text-base md:text-lg text-ink-700 leading-relaxed">
+          Through well-researched protocols, our therapists adapt every program to your individual needs. Therapy starts when your physician clears you, then progresses with your recovery toward four core goals.
+        </p>
+      </div>
+
+      <!-- 4 goal items flowing down, no timeline -->
+      <ul class="mx-auto mt-16 max-w-5xl grid gap-10 md:grid-cols-2 md:gap-x-12 md:gap-y-12">
+        {postSurgicalGoals.map((g, i) => {
+          const palettes = [
+            { dot: 'bg-accent-500', glow: 'bg-accent-300/40', iconBg: 'bg-accent-50', iconText: 'text-accent-600' },
+            { dot: 'bg-brand-500',  glow: 'bg-brand-300/40',  iconBg: 'bg-brand-50',  iconText: 'text-brand-600'  },
+            { dot: 'bg-brand-500',  glow: 'bg-brand-300/40',  iconBg: 'bg-brand-50',  iconText: 'text-brand-600'  },
+            { dot: 'bg-accent-500', glow: 'bg-accent-300/40', iconBg: 'bg-accent-50', iconText: 'text-accent-600' },
+          ];
+          const p = palettes[i];
+          return (
+            <li class="group relative flex items-start gap-6 md:gap-8">
+              <!-- glowing orb + icon -->
+              <div class="relative shrink-0">
+                <span aria-hidden="true" class={`absolute inset-0 ${p.glow} rounded-full blur-md scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></span>
+                <div class={`relative inline-flex h-14 w-14 items-center justify-center rounded-full ${p.iconBg} ${p.iconText} ring-1 ring-white shadow-sm`}>
+                  <Icon name={g.icon} class="h-6 w-6" />
+                </div>
+                <span aria-hidden="true" class={`absolute -bottom-1 -right-1 h-3 w-3 rounded-full ${p.dot} ring-2 ring-white`}></span>
+              </div>
+
+              <div class="min-w-0 flex-1 pt-1">
+                <h4 class="text-xl md:text-2xl font-bold text-ink-900 tracking-tight">{g.title}</h4>
+                <p class="mt-2 text-base md:text-lg text-ink-600 leading-relaxed">{g.body}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Common orthopedic procedures referred for rehab -->
+  <section class="relative bg-white py-20 md:py-28 border-t border-ink-100">
+    <div class="container-x relative">
+      <div class="mx-auto max-w-3xl text-center">
+        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+          <span class="h-px w-8 bg-brand-300"></span>
+          Orthopedic procedures
+          <span class="h-px w-8 bg-brand-300"></span>
+        </span>
+        <h2 class="mt-4 text-4xl md:text-6xl font-bold tracking-tight text-ink-900 leading-[1.02]">
+          Built for every <span class="text-brand-600 italic">recovery</span>.
+        </h2>
+        <p class="mt-5 text-base md:text-lg text-ink-700 leading-relaxed">
+          From a small hand procedure to a full joint replacement — these are some of the most common orthopedic surgeries we treat after your physician clears you for rehab.
+        </p>
+      </div>
+
+      <!-- Region selector + procedure panel -->
+      <div class="mx-auto mt-16 max-w-5xl">
+        <!-- Tabs -->
+        <div role="tablist" aria-label="Body regions" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {orthoCategories.map((c, i) => (
+            <button
+              type="button"
+              role="tab"
+              data-ortho-tab={i}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              aria-controls={`ortho-panel-${i}`}
+              class="group relative overflow-hidden rounded-2xl p-4 text-left ring-1 ring-ink-100 bg-white aria-selected:ring-2 aria-selected:ring-brand-500 aria-selected:bg-gradient-to-br aria-selected:from-brand-600 aria-selected:to-brand-700 aria-selected:text-white transition-all hover:-translate-y-0.5"
+            >
+              <div class="flex items-center gap-3">
+                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 group-aria-selected:bg-white/15 group-aria-selected:text-white">
+                  <Icon name={c.icon} class="h-5 w-5" />
+                </span>
+                <div class="min-w-0">
+                  <div class="text-xs font-semibold text-ink-500 group-aria-selected:text-brand-100">
+                    {c.procedures.length} procedures
+                  </div>
+                  <div class="text-base md:text-lg font-bold text-ink-900 group-aria-selected:text-white truncate">
+                    {c.name}
+                  </div>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        <!-- Panels -->
+        <div class="mt-6 relative rounded-[2rem] bg-white ring-1 ring-ink-100 shadow-lg shadow-brand-900/5 p-8 md:p-12 overflow-hidden">
+          <div aria-hidden="true" class="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-brand-200/20 blur-3xl"></div>
+
+          {orthoCategories.map((c, i) => (
+            <div
+              role="tabpanel"
+              id={`ortho-panel-${i}`}
+              data-ortho-panel={i}
+              hidden={i !== 0}
+              class="relative"
+            >
+              <div class="flex items-end justify-between gap-4 flex-wrap">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-[0.22em] text-brand-700">{c.procedures.length} procedures</span>
+                  <h3 class="mt-1 text-3xl md:text-4xl font-bold text-ink-900 tracking-tight">
+                    {c.name} <span class="text-brand-600 italic font-semibold">surgeries</span>
+                  </h3>
+                </div>
+                <div class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-50 text-brand-600 shadow-sm">
+                  <Icon name={c.icon} class="h-7 w-7" />
+                </div>
+              </div>
+
+              <ul class="mt-8 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                {c.procedures.map((p) => (
+                  <li class="group flex items-center gap-3 rounded-xl px-3 py-2.5 -mx-3 hover:bg-brand-50/60 transition-colors">
+                    <span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-colors">
+                      <Icon name="arrow" class="h-3.5 w-3.5" />
+                    </span>
+                    <span class="text-ink-800 leading-snug">{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const tabs = document.querySelectorAll<HTMLButtonElement>('[data-ortho-tab]');
+    const panels = document.querySelectorAll<HTMLElement>('[data-ortho-panel]');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const idx = tab.dataset.orthoTab;
+        tabs.forEach((t) => t.setAttribute('aria-selected', t.dataset.orthoTab === idx ? 'true' : 'false'));
+        panels.forEach((p) => {
+          if (p.dataset.orthoPanel === idx) {
+            p.removeAttribute('hidden');
+          } else {
+            p.setAttribute('hidden', '');
+          }
+        });
+      });
+    });
+  </script>
 </BaseLayout>

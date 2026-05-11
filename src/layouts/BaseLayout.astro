@@ -2,35 +2,85 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import StructuredData from '../components/StructuredData.astro';
 import { type Lang, getLangFromUrl } from '../i18n/ui';
 
 interface Props {
   title: string;
   description?: string;
   lang?: Lang;
+  ogImage?: string;
 }
 
 const detected = getLangFromUrl(Astro.url);
-const { title, description = 'Outpatient physical and occupational therapy in Miami — Kendall and Doral.', lang = detected } = Astro.props;
+const {
+  title,
+  description = 'Outpatient physical and occupational therapy in Miami — personalized rehabilitation in Kendall and Doral. Bilingual care, same-week appointments, evidence-based treatment.',
+  lang = detected,
+  ogImage = '/logo.png',
+} = Astro.props;
+
+const siteUrl = 'https://livactivetherapy.com';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const fullOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteUrl).toString();
+
+// Build alternate-language URLs for hreflang
+const stripped = lang === 'en' ? Astro.url.pathname : Astro.url.pathname.replace(/^\/es/, '') || '/';
+const enUrl = new URL(stripped, siteUrl).toString();
+const esUrl = new URL(stripped === '/' ? '/es/' : `/es${stripped}`, siteUrl).toString();
 ---
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#3679a5" />
+
+    <!-- Primary -->
+    <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Hreflang for bilingual pages -->
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="es" href={esUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:site_name" content="LIV Active Therapy" />
+    <meta property="og:locale" content={lang === 'es' ? 'es_US' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_US'} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImage} />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap"
     />
-    <title>{title}</title>
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- JSON-LD structured data -->
+    <StructuredData />
   </head>
   <body class="min-h-screen flex flex-col">
     <Header lang={lang} />

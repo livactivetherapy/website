@@ -14,6 +14,8 @@ export const ui = {
     'nav.team': 'Our Team',
     'nav.locations': 'Locations',
     'nav.contact': 'Contact',
+    'nav.insurance': 'Insurance',
+    'nav.injury': 'Accident Injury',
     'nav.book': 'Book an appointment',
 
     'cta.call': 'Call now',
@@ -23,14 +25,13 @@ export const ui = {
 
     'hero.eyebrow': 'Outpatient physical & occupational therapy in Miami',
     'hero.title': 'Move better. Heal faster. LIV Active.',
-    'hero.body': 'One-on-one rehabilitation built around you — from sports injuries and post-surgery recovery to pediatric and prenatal care. Two locations: Kendall and Doral.',
+    'hero.body': 'Personalized rehabilitation built around you — from sports injuries and post-surgery recovery to pediatric and prenatal care. Two locations: Kendall and Doral.',
     'hero.primary': 'Book a session',
     'hero.secondary': 'See our services',
 
     'trust.title': 'Trusted by Miami families since 2015',
     'trust.bilingual': 'Bilingual care (EN / ES)',
     'trust.insurance': 'Most insurances accepted',
-    'trust.oneonone': 'One-on-one sessions',
     'trust.locations': 'Two convenient locations',
 
     'services.title': 'Therapies tailored to your recovery',
@@ -39,8 +40,8 @@ export const ui = {
     'team.title': 'Meet the experts',
     'team.subtitle': 'At LivActive, we strive to provide you with the best. Our team is built of industry-leading physical and occupational therapists dedicated to helping you surpass your goals.',
 
-    'locations.title': 'Two Miami locations',
-    'locations.subtitle': 'Easy parking, bilingual front desk, and same-week availability for new patients.',
+    'locations.title': 'Plan your visit.',
+    'locations.subtitle': 'Two Miami clinics, most major insurances accepted, and same-week availability for new patients.',
     'locations.hours': 'Hours',
     'locations.phone': 'Phone',
     'locations.address': 'Address',
@@ -78,6 +79,8 @@ export const ui = {
     'nav.team': 'Equipo',
     'nav.locations': 'Ubicaciones',
     'nav.contact': 'Contacto',
+    'nav.insurance': 'Seguros',
+    'nav.injury': 'Lesiones',
     'nav.book': 'Reservar una cita',
 
     'cta.call': 'Llamar ahora',
@@ -87,14 +90,13 @@ export const ui = {
 
     'hero.eyebrow': 'Terapia física y ocupacional ambulatoria en Miami',
     'hero.title': 'Muévete mejor. Sana más rápido. LIV Active.',
-    'hero.body': 'Rehabilitación uno a uno diseñada para ti — desde lesiones deportivas y recuperación postquirúrgica hasta cuidado pediátrico y prenatal. Dos ubicaciones: Kendall y Doral.',
+    'hero.body': 'Rehabilitación personalizada diseñada para ti — desde lesiones deportivas y recuperación postquirúrgica hasta cuidado pediátrico y prenatal. Dos ubicaciones: Kendall y Doral.',
     'hero.primary': 'Reservar sesión',
     'hero.secondary': 'Ver nuestros servicios',
 
     'trust.title': 'La confianza de las familias de Miami desde 2015',
     'trust.bilingual': 'Atención bilingüe (EN / ES)',
     'trust.insurance': 'Aceptamos la mayoría de seguros',
-    'trust.oneonone': 'Sesiones uno a uno',
     'trust.locations': 'Dos ubicaciones convenientes',
 
     'services.title': 'Terapias adaptadas a tu recuperación',
@@ -103,8 +105,8 @@ export const ui = {
     'team.title': 'Conoce a los expertos',
     'team.subtitle': 'En LivActive nos esforzamos por brindarte lo mejor. Nuestro equipo está formado por terapeutas físicos y ocupacionales líderes en la industria, dedicados a ayudarte a superar tus metas.',
 
-    'locations.title': 'Dos ubicaciones en Miami',
-    'locations.subtitle': 'Estacionamiento fácil, recepción bilingüe y disponibilidad la misma semana para pacientes nuevos.',
+    'locations.title': 'Planifica tu visita.',
+    'locations.subtitle': 'Dos clínicas en Miami, aceptamos la mayoría de los seguros y disponibilidad la misma semana para pacientes nuevos.',
     'locations.hours': 'Horario',
     'locations.phone': 'Teléfono',
     'locations.address': 'Dirección',

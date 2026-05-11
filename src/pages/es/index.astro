@@ -2,13 +2,16 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
 import ServicesGrid from '../../components/ServicesGrid.astro';
+import AccidentInjuryStrip from '../../components/AccidentInjuryStrip.astro';
 import Promise from '../../components/Promise.astro';
 import TeamPreview from '../../components/TeamPreview.astro';
 import LocationsPreview from '../../components/LocationsPreview.astro';
+import InsuranceStrip from '../../components/InsuranceStrip.astro';
+import AboutPreview from '../../components/AboutPreview.astro';
 ---
 <BaseLayout
   title="LIV Active Therapy — Terapia Física y Ocupacional en Miami"
-  description="Terapia física y ocupacional ambulatoria en Miami. Rehabilitación uno a uno en Kendall y Doral. Atención bilingüe, citas la misma semana."
+  description="Terapia física y ocupacional ambulatoria en Miami. Rehabilitación personalizada en Kendall y Doral. Atención bilingüe, citas la misma semana."
   lang="es"
 >
   <Hero lang="es" />
@@ -16,4 +19,7 @@ import LocationsPreview from '../../components/LocationsPreview.astro';
   <Promise lang="es" />
   <TeamPreview lang="es" compact />
   <LocationsPreview lang="es" />
+  <InsuranceStrip lang="es" />
+  <AccidentInjuryStrip lang="es" />
+  <AboutPreview lang="es" />
 </BaseLayout>

@@ -1,0 +1,81 @@
+---
+import { site } from '../config/site';
+
+const baseUrl = 'https://livactivetherapy.com';
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': ['MedicalBusiness', 'PhysicalTherapy'],
+  '@id': `${baseUrl}/#organization`,
+  name: 'LIV Active Therapy Center',
+  alternateName: 'LivActive',
+  url: baseUrl,
+  logo: `${baseUrl}/logo.png`,
+  image: `${baseUrl}/logo.png`,
+  email: site.email,
+  faxNumber: site.fax,
+  description: 'Outpatient physical and occupational therapy in Miami. Personalized rehabilitation, bilingual care, and same-week appointments at our Kendall and Doral locations.',
+  priceRange: '$$',
+  sameAs: [site.social.instagram, site.social.facebook],
+  areaServed: { '@type': 'City', name: 'Miami' },
+  knowsLanguage: ['en', 'es'],
+  medicalSpecialty: ['PhysicalTherapy', 'OccupationalTherapy'],
+  availableService: [
+    { '@type': 'MedicalTherapy', name: 'Physical Therapy' },
+    { '@type': 'MedicalTherapy', name: 'Occupational Therapy' },
+    { '@type': 'MedicalTherapy', name: 'Cupping Therapy' },
+    { '@type': 'MedicalTherapy', name: 'Kinesiotaping' },
+    { '@type': 'MedicalTherapy', name: 'Blood Flow Restriction (BFR)' },
+    { '@type': 'MedicalTherapy', name: 'Sport & Training Technique Enhancement' },
+  ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+      opens: '08:00',
+      closes: '19:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Friday',
+      opens: '08:00',
+      closes: '17:00',
+    },
+  ],
+  location: site.locations.map((loc) => {
+    const [streetAddress, suite] = loc.address.split(', ');
+    const [city, stateZip] = loc.city.split(', ');
+    const [state, postalCode] = stateZip.split(' ');
+    return {
+      '@type': 'PhysicalTherapy',
+      '@id': `${baseUrl}/#location-${loc.slug}`,
+      name: `LIV Active Therapy Center — ${loc.name}`,
+      url: `${baseUrl}/locations`,
+      telephone: '+1' + loc.phone.replace(/\D/g, ''),
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: suite ? `${streetAddress}, ${suite}` : streetAddress,
+        addressLocality: city,
+        addressRegion: state,
+        postalCode: postalCode,
+        addressCountry: 'US',
+      },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+          opens: '08:00',
+          closes: '19:00',
+        },
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: 'Friday',
+          opens: '08:00',
+          closes: '17:00',
+        },
+      ],
+    };
+  }),
+};
+---
+<script type="application/ld+json" is:inline set:html={JSON.stringify(organization)} />

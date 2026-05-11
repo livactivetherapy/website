@@ -21,8 +21,8 @@ const pillars = [
   },
   {
     icon: 'check',
-    title: 'Therapist-monitored exercise',
-    body: 'Every activity you perform is monitored by your therapist to ensure proper form and prevent injury. No unsupervised circuits, no guesswork.',
+    title: 'Therapist-guided exercise',
+    body: 'Your activities are guided by a licensed therapist who ensures proper form, prevents injury, and progresses your plan based on how your body responds.',
   },
   {
     icon: 'check',
@@ -45,8 +45,8 @@ const pillars = [
   <section class="container-x py-16 md:py-20">
     <!-- Block 1: Featured intro (image left, text right) -->
     <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-      <div class="lg:col-span-5">
-        <!-- Image placeholder -->
+      <div class="hidden lg:block lg:col-span-5">
+        <!-- Image placeholder (hidden on mobile until real photo lands) -->
         <div class="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500 ring-1 ring-brand-300/50 shadow-xl shadow-brand-900/10">
           <div aria-hidden="true" class="absolute inset-0 opacity-30 mix-blend-overlay bg-[radial-gradient(circle_at_30%_20%,white,transparent_55%),radial-gradient(circle_at_70%_80%,white,transparent_45%)]"></div>
           <div class="absolute inset-0 flex flex-col items-center justify-center text-white/80">
@@ -86,7 +86,7 @@ const pillars = [
         {[
           { n: '01', title: 'Initial evaluation', body: 'We document your functional deficits alongside your personal goals to understand exactly what you need.' },
           { n: '02', title: 'Personalized plan', body: 'An individualized intervention plan — not a template — built from patient education, manual therapy, and targeted exercise.' },
-          { n: '03', title: 'Active treatment', body: 'Every exercise is monitored by your therapist to ensure proper form and prevent injury. Programs progress as symptoms diminish.' },
+          { n: '03', title: 'Active treatment', body: 'Your therapist guides your exercises and adjusts your program to ensure proper form, prevent injury, and progress as symptoms diminish.' },
           { n: '04', title: 'Wellness beyond', body: 'Once discharged, join our wellness programs to maintain strength, mobility, and confidence — supervised by our staff.' },
         ].map((step) => (
           <li class="group relative rounded-2xl bg-white ring-1 ring-ink-100 p-6 hover:ring-brand-300 hover:-translate-y-1 transition-all duration-300">
@@ -145,8 +145,8 @@ const pillars = [
           ))}
         </ul>
       </div>
-      <div class="lg:col-span-5 lg:order-2 order-1">
-        <!-- Image placeholder -->
+      <div class="hidden lg:block lg:col-span-5 lg:order-2 order-1">
+        <!-- Image placeholder (hidden on mobile until real photo lands) -->
         <div class="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-gradient-to-br from-accent-200 via-accent-300 to-accent-500 ring-1 ring-accent-300/50 shadow-xl shadow-accent-900/10">
           <div aria-hidden="true" class="absolute inset-0 opacity-30 mix-blend-overlay bg-[radial-gradient(circle_at_30%_20%,white,transparent_55%),radial-gradient(circle_at_70%_80%,white,transparent_45%)]"></div>
           <div class="absolute inset-0 flex flex-col items-center justify-center text-white/85">

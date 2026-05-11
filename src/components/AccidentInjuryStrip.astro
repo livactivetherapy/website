@@ -1,0 +1,67 @@
+---
+import Icon from './Icon.astro';
+import { localizedPath, type Lang } from '../i18n/ui';
+import { site } from '../config/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const L = (p: string) => localizedPath(lang, p);
+const primaryPhone = site.locations[0].phoneHref;
+const primaryPhoneLabel = site.locations[0].phone;
+
+const copy = lang === 'es'
+  ? {
+      eyebrow: 'Accidentes · Caídas',
+      titleLead: '¿Accidente o caída?',
+      titleAccent: 'Te ayudamos.',
+      body: 'Tratamos lesiones de cuello, espalda, articulaciones y tejido blando. Citas la misma semana — coordinamos con tu equipo médico y legal.',
+      cta: 'Ver más',
+      call: 'Llámanos',
+    }
+  : {
+      eyebrow: 'Car accidents · Slips & falls',
+      titleLead: 'Accident or fall?',
+      titleAccent: 'We help.',
+      body: 'We treat neck, back, joint, and soft-tissue injuries. Same-week appointments — coordinated with your medical and legal team.',
+      cta: 'Learn more',
+      call: 'Call us',
+    };
+---
+<section class="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-900 to-brand-950">
+  <div aria-hidden="true" class="pointer-events-none absolute -top-32 -left-24 h-[28rem] w-[28rem] rounded-full bg-brand-600/30 blur-3xl"></div>
+  <div aria-hidden="true" class="pointer-events-none absolute top-1/2 -right-32 -translate-y-1/2 h-[28rem] w-[28rem] rounded-full bg-brand-500/25 blur-3xl"></div>
+
+  <div class="container-x relative py-16 md:py-20">
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div class="lg:col-span-7 text-white">
+        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-200">
+          <span class="h-px w-8 bg-brand-300"></span>
+          {copy.eyebrow}
+        </span>
+        <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-white leading-tight">
+          {copy.titleLead} <span class="text-brand-300 italic">{copy.titleAccent}</span>
+        </h2>
+        <p class="mt-5 text-base text-brand-100/90 leading-relaxed max-w-xl">
+          {copy.body}
+        </p>
+      </div>
+
+      <div class="lg:col-span-5 flex flex-col gap-3">
+        <a
+          href={L('/accident-injury')}
+          class="inline-flex items-center justify-center gap-2 rounded-full bg-white text-brand-900 px-6 py-3 text-sm font-semibold hover:bg-brand-50 transition shadow-md shadow-brand-950/30"
+        >
+          {copy.cta}
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+        <a
+          href={primaryPhone}
+          class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-700/40 ring-1 ring-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-brand-700/60 transition"
+        >
+          <Icon name="phone" class="h-4 w-4" />
+          {copy.call} · {primaryPhoneLabel}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

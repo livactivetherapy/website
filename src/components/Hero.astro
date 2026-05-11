@@ -11,60 +11,133 @@ const L = (p: string) => localizedPath(lang, p);
 
 const services = (await getCollection('services', ({ data }) => data.lang === lang))
   .sort((a, b) => a.data.order - b.data.order);
-// duplicate the list so the marquee loop is seamless
 const marqueeItems = [...services, ...services];
+
+// Hero carousel images (rotates on desktop panel + as mobile background)
+const heroImages = [
+  '/hero/slide-1.jpg',
+  '/hero/slide-2.jpg',
+  '/hero/slide-3.jpg',
+  '/hero/slide-4.jpg',
+];
+
+// Split title so the brand name stays on one line on mobile
+const fullTitle = t('hero.title');
+const [titlePrefix, titleBrand] = fullTitle.split(/(LIV Active\.?)/).filter(Boolean);
+
+// Rotating callouts shown over the desktop hero image
+const callouts = lang === 'es'
+  ? [
+      { icon: 'calendar', title: 'Citas la misma semana', body: 'Llámanos hoy para reservar' },
+      { icon: 'globe',    title: 'Atención bilingüe',      body: 'Hablamos español e inglés' },
+      { icon: 'hand',     title: 'Planes personalizados',    body: 'Diseñados para tus objetivos' },
+      { icon: 'pin',      title: 'Dos ubicaciones',         body: 'Kendall y Doral' },
+    ]
+  : [
+      { icon: 'calendar', title: 'Same-week appointments', body: 'Call today to book your spot' },
+      { icon: 'globe',    title: 'Bilingual care',          body: 'English & Spanish spoken' },
+      { icon: 'hand',     title: 'Personalized plans',      body: 'Built around your goals' },
+      { icon: 'pin',      title: 'Two convenient locations', body: 'Kendall & Doral' },
+    ];
 ---
 <section class="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
-  <!-- decorative blobs -->
-  <div aria-hidden="true" class="absolute -top-32 -right-24 h-96 w-96 rounded-full bg-brand-200/40 blur-3xl"></div>
-  <div aria-hidden="true" class="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-accent-200/40 blur-3xl"></div>
-
-  <div class="container-x relative pt-16 pb-20 md:pt-24 md:pb-28 grid lg:grid-cols-12 gap-10 items-center">
-    <div class="lg:col-span-7">
-      <span class="inline-flex items-center gap-2 rounded-full bg-white/80 ring-1 ring-brand-200 px-3 py-1 text-xs font-semibold text-brand-700">
-        <span class="h-1.5 w-1.5 rounded-full bg-accent-500 animate-pulse"></span>
-        {t('hero.eyebrow')}
-      </span>
-      <h1 class="mt-5 text-4xl md:text-6xl font-extrabold tracking-tight text-ink-900">
-        {t('hero.title')}
-      </h1>
-      <p class="mt-5 max-w-xl text-lg text-ink-600 leading-relaxed">
-        {t('hero.body')}
-      </p>
-      <div class="mt-8 flex flex-wrap items-center gap-3">
-        <a
-          href={site.locations[0].phoneHref}
-          class="inline-flex items-center gap-2 rounded-full bg-brand-600 px-6 py-3 text-base font-semibold text-white hover:bg-brand-700 transition shadow-lg shadow-brand-900/10"
-        >
-          <Icon name="phone" class="h-5 w-5" />
-          {t('hero.primary')}
-        </a>
-        <a
-          href={L('/services')}
-          class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-base font-semibold text-ink-800 ring-1 ring-ink-200 hover:bg-ink-50 transition"
-        >
-          {t('hero.secondary')}
-          <Icon name="arrow" class="h-4 w-4" />
-        </a>
-      </div>
-
+  <!-- Hero content area (relative so mobile bg only covers this, not the marquee) -->
+  <div class="relative">
+    <!-- Mobile-only background carousel -->
+    <div class="absolute inset-0 lg:hidden" aria-hidden="true">
+      {heroImages.map((src, i) => (
+        <img
+          src={src}
+          alt=""
+          loading={i === 0 ? 'eager' : 'lazy'}
+          decoding="async"
+          class={`hero-mobile-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+          data-slide={i}
+        />
+      ))}
+      <!-- light overlay (with subtle dark tint) so text stays readable + image keeps a moodier feel -->
+      <div class="absolute inset-0 bg-black/10"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-white/90 via-white/85 to-white/78 backdrop-blur-[2px]"></div>
     </div>
 
-    <div class="lg:col-span-5">
-      <div class="relative aspect-[4/5] w-full max-w-md mx-auto rounded-[var(--radius-card)] overflow-hidden bg-gradient-to-br from-brand-600 via-brand-500 to-brand-700 shadow-2xl shadow-brand-900/20 ring-1 ring-brand-900/10">
-        <div class="absolute inset-0 opacity-30 mix-blend-overlay bg-[radial-gradient(circle_at_30%_20%,white,transparent_50%),radial-gradient(circle_at_70%_80%,white,transparent_40%)]"></div>
-        <div class="absolute bottom-6 left-6 right-6 rounded-2xl bg-white/95 backdrop-blur p-5">
-          <div class="flex items-center gap-3">
-            <div class="h-10 w-10 rounded-full bg-accent-100 text-accent-600 flex items-center justify-center">
-              <Icon name="calendar" class="h-5 w-5" />
+    <!-- Decorative blobs (desktop) -->
+    <div aria-hidden="true" class="hidden lg:block absolute -top-32 -right-24 h-96 w-96 rounded-full bg-brand-200/40 blur-3xl"></div>
+    <div aria-hidden="true" class="hidden lg:block absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-accent-200/40 blur-3xl"></div>
+
+    <div class="container-x relative pt-24 pb-24 md:pt-24 md:pb-28 grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7 text-center lg:text-left">
+        <span class="inline-flex items-center gap-2 rounded-full bg-white/90 ring-1 ring-brand-200 px-3 py-1 text-xs font-semibold text-brand-700 shadow-sm">
+          <span class="h-1.5 w-1.5 rounded-full bg-accent-500 animate-pulse"></span>
+          {t('hero.eyebrow')}
+        </span>
+        <h1 class="mt-5 text-5xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-ink-900 text-balance leading-[1.02]">
+          {titlePrefix}<span class="whitespace-nowrap">{titleBrand}</span>
+        </h1>
+        <p class="mt-6 max-w-xl mx-auto lg:mx-0 text-base sm:text-lg text-ink-700 leading-relaxed">
+          {t('hero.body')}
+        </p>
+        <div class="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+          <a
+            href={site.locations[0].phoneHref}
+            class="inline-flex items-center gap-2 rounded-full bg-brand-600 px-6 py-3 text-base font-semibold text-white hover:bg-brand-700 transition shadow-lg shadow-brand-900/20"
+          >
+            <Icon name="phone" class="h-5 w-5" />
+            {t('hero.primary')}
+          </a>
+          <a
+            href={L('/services')}
+            class="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-base font-semibold text-ink-800 ring-1 ring-ink-200 hover:bg-ink-50 transition shadow-sm"
+          >
+            {t('hero.secondary')}
+            <Icon name="arrow" class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Desktop carousel panel (hidden on mobile) -->
+      <div class="hidden lg:block lg:col-span-5">
+        <div class="relative aspect-[4/5] w-full max-w-md mx-auto rounded-[var(--radius-card)] overflow-hidden shadow-2xl shadow-brand-900/20 ring-1 ring-brand-900/10 bg-brand-900">
+          {heroImages.map((src, i) => (
+            <img
+              src={src}
+              alt={`LIV Active Therapy ${i === 0 ? 'session' : ''}`}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              class={`hero-desktop-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+              data-slide={i}
+            />
+          ))}
+          <!-- dark overlay for mood + bottom gradient for callout legibility -->
+          <div aria-hidden="true" class="absolute inset-0 bg-black/20 pointer-events-none"></div>
+          <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+          <!-- Rotating callout -->
+          <div class="absolute bottom-6 left-6 right-6 rounded-2xl bg-white/95 backdrop-blur p-5 shadow-xl overflow-hidden">
+            <div class="relative h-10">
+              {callouts.map((c, i) => (
+                <div
+                  data-callout
+                  data-index={i}
+                  class={`absolute inset-0 flex items-center gap-3 transition-opacity duration-500 ease-out ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+                >
+                  <div class="h-10 w-10 rounded-full bg-accent-100 text-accent-600 flex items-center justify-center shrink-0">
+                    <Icon name={c.icon} class="h-5 w-5" />
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-sm font-semibold text-ink-900 truncate">{c.title}</div>
+                    <div class="text-xs text-ink-600 truncate">{c.body}</div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div>
-              <div class="text-sm font-semibold text-ink-900">
-                {lang === 'es' ? 'Citas la misma semana' : 'Same-week appointments'}
-              </div>
-              <div class="text-xs text-ink-600">
-                {lang === 'es' ? 'Llámanos hoy para reservar' : 'Call today to book your spot'}
-              </div>
+            <!-- progress dots, centered at bottom of card -->
+            <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5" aria-hidden="true">
+              {callouts.map((_, i) => (
+                <span
+                  data-callout-dot
+                  data-index={i}
+                  class={`h-1 rounded-full transition-all duration-500 ${i === 0 ? 'w-5 bg-accent-500' : 'w-1.5 bg-ink-200'}`}
+                ></span>
+              ))}
             </div>
           </div>
         </div>
@@ -72,26 +145,26 @@ const marqueeItems = [...services, ...services];
     </div>
   </div>
 
-  <!-- Services marquee strip -->
-  <div class="relative border-t border-brand-100/70 bg-white/60 backdrop-blur-sm">
-    <div class="container-x py-6">
-      <div
-        class="relative overflow-x-clip overflow-y-visible py-1"
-        style="mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);"
-      >
-          <div class="flex w-max items-center gap-3 animate-[marquee_40s_linear_infinite] hover:[animation-play-state:paused]">
-            {marqueeItems.map((s, i) => (
-              <a
-                href={L(`/services/${s.data.slug}`)}
-                aria-hidden={i >= services.length ? 'true' : undefined}
-                class="group inline-flex items-center gap-2 shrink-0 rounded-full bg-white ring-1 ring-brand-100 px-4 py-2 text-sm font-medium text-ink-800 hover:ring-brand-300 hover:bg-brand-50 transition"
-              >
-                <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-50 text-brand-600 group-hover:bg-white">
-                  <Icon name={s.data.icon} class="h-4 w-4" />
-                </span>
-                <span class="whitespace-nowrap">{s.data.title}</span>
-              </a>
-            ))}
+  <!-- Services marquee strip (sits below mobile bg, full width) -->
+  <div class="relative border-t border-brand-100/70 bg-white/85 backdrop-blur-sm">
+    <div class="relative py-6 overflow-x-hidden">
+      <!-- side fade overlays (don't clip the pills) -->
+      <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent z-10"></div>
+      <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent z-10"></div>
+      <div class="relative py-1">
+        <div class="flex w-max items-center gap-3 animate-[marquee_40s_linear_infinite] hover:[animation-play-state:paused]">
+          {marqueeItems.map((s, i) => (
+            <a
+              href={L(`/services/${s.data.slug}`)}
+              aria-hidden={i >= services.length ? 'true' : undefined}
+              class="group inline-flex items-center gap-2 shrink-0 rounded-full bg-white ring-1 ring-brand-100 px-4 py-2 text-sm font-medium text-ink-800 hover:ring-brand-300 hover:bg-brand-50 transition"
+            >
+              <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-50 text-brand-600 group-hover:bg-white">
+                <Icon name={s.data.icon} class="h-4 w-4" />
+              </span>
+              <span class="whitespace-nowrap">{s.data.title}</span>
+            </a>
+          ))}
         </div>
       </div>
     </div>
@@ -109,3 +182,39 @@ const marqueeItems = [...services, ...services];
     }
   }
 </style>
+
+<script>
+  // Sync rotation between mobile background carousel and desktop panel carousel
+  const mobileSlides = document.querySelectorAll<HTMLImageElement>('.hero-mobile-slide');
+  const desktopSlides = document.querySelectorAll<HTMLImageElement>('.hero-desktop-slide');
+  const total = Math.max(mobileSlides.length, desktopSlides.length);
+  if (total > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let current = 0;
+    setInterval(() => {
+      const next = (current + 1) % total;
+      mobileSlides[current]?.classList.replace('opacity-100', 'opacity-0');
+      desktopSlides[current]?.classList.replace('opacity-100', 'opacity-0');
+      mobileSlides[next]?.classList.replace('opacity-0', 'opacity-100');
+      desktopSlides[next]?.classList.replace('opacity-0', 'opacity-100');
+      current = next;
+    }, 5000);
+  }
+
+  // Rotate the callout pills inside the hero panel
+  const callouts = document.querySelectorAll<HTMLElement>('[data-callout]');
+  const dots = document.querySelectorAll<HTMLElement>('[data-callout-dot]');
+  if (callouts.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let i = 0;
+    setInterval(() => {
+      const next = (i + 1) % callouts.length;
+      callouts[i].classList.replace('opacity-100', 'opacity-0');
+      callouts[next].classList.replace('opacity-0', 'opacity-100');
+      // Update dots
+      dots[i]?.classList.replace('w-5', 'w-1.5');
+      dots[i]?.classList.replace('bg-accent-500', 'bg-ink-200');
+      dots[next]?.classList.replace('w-1.5', 'w-5');
+      dots[next]?.classList.replace('bg-ink-200', 'bg-accent-500');
+      i = next;
+    }, 3500);
+  }
+</script>
