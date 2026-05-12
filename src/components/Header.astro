@@ -35,8 +35,8 @@ const nav: NavItem[] = [
   {
     label: t('nav.forms'),
     dropdown: [
-      { href: site.forms.en, label: t('footer.formsEn'), icon: 'arrow', external: true, download: true },
-      { href: site.forms.es, label: t('footer.formsEs'), icon: 'arrow', external: true, download: true },
+      { href: L('/forms/english'), label: t('footer.formsEn'), icon: 'arrow' },
+      { href: L('/forms/spanish'), label: t('footer.formsEs'), icon: 'arrow' },
     ],
   },
   { href: L('/contact'), label: t('nav.contact') },
@@ -152,20 +152,23 @@ const primaryPhone = site.locations[0].phoneHref;
     <nav class="container-x py-4 flex flex-col gap-1" aria-label="Mobile">
       {nav.map((item) =>
         item.dropdown ? (
-          <>
-            {item.href ? (
-              <a
-                href={item.href}
-                class="py-3 text-base font-medium text-ink-800 hover:text-brand-700"
-              >
-                {item.label}
-              </a>
-            ) : (
-              <div class="py-3 text-base font-medium text-ink-800">
-                {item.label}
-              </div>
-            )}
+          <details class="group border-b border-ink-100/60 last:border-b-0">
+            <summary class="list-none cursor-pointer py-3 flex items-center justify-between text-base font-medium text-ink-800 hover:text-brand-700">
+              <span>{item.label}</span>
+              <svg class="h-4 w-4 text-ink-500 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </summary>
             <div class="pl-4 border-l-2 border-brand-100 ml-1 mb-2 flex flex-col gap-1">
+              {item.href && (
+                <a
+                  href={item.href}
+                  class="flex items-center gap-2.5 py-2 text-sm font-semibold text-brand-700 hover:text-brand-800"
+                >
+                  <Icon name="arrow" class="h-4 w-4" />
+                  {lang === 'es' ? 'Ver todo' : 'View all'}
+                </a>
+              )}
               {item.dropdown.map((d) => (
                 <a
                   href={d.href}
@@ -179,11 +182,11 @@ const primaryPhone = site.locations[0].phoneHref;
                 </a>
               ))}
             </div>
-          </>
+          </details>
         ) : (
           <a
             href={item.href}
-            class="py-3 text-base font-medium text-ink-800 hover:text-brand-700"
+            class="py-3 text-base font-medium text-ink-800 hover:text-brand-700 border-b border-ink-100/60 last:border-b-0"
           >
             {item.label}
           </a>

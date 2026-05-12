@@ -2,7 +2,7 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import Icon from './Icon.astro';
-import { type Lang } from '../i18n/ui';
+import { localizedPath, type Lang } from '../i18n/ui';
 import { site } from '../config/site';
 
 interface Props {
@@ -11,25 +11,27 @@ interface Props {
   variant?: 'card' | 'compact';
 }
 const { lang, variant = 'card' } = Astro.props;
+const L = (p: string) => localizedPath(lang, p);
 
-const enPath = site.forms.en;
-const esPath = site.forms.es;
-const hasEn = existsSync(join(process.cwd(), 'public', enPath));
-const hasEs = existsSync(join(process.cwd(), 'public', esPath));
+const hasEn = existsSync(join(process.cwd(), 'public', site.forms.en));
+const hasEs = existsSync(join(process.cwd(), 'public', site.forms.es));
+// Links point to preview pages, not direct PDFs
+const enPath = L('/forms/english');
+const esPath = L('/forms/spanish');
 
 const copy = lang === 'es'
   ? {
       title: 'Formularios de registro',
       body: 'Ahorra tiempo en tu primera visita — descarga y completa los formularios antes de venir.',
-      enLabel: 'En inglés',
-      esLabel: 'En español',
+      enLabel: 'Formulario en Inglés',
+      esLabel: 'Formulario en Español',
       soon: 'Próximamente',
     }
   : {
       title: 'Registration forms',
       body: 'Save time on your first visit — download and fill out the forms before you come in.',
       enLabel: 'English form',
-      esLabel: 'Spanish form',
+      esLabel: 'Formulario en Español',
       soon: 'Coming soon',
     };
 ---
@@ -46,9 +48,6 @@ const copy = lang === 'es'
     <div class="mt-5 grid gap-2.5 sm:grid-cols-2">
       <a
         href={hasEn ? enPath : undefined}
-        target={hasEn ? '_blank' : undefined}
-        rel={hasEn ? 'noopener' : undefined}
-        download={hasEn ? '' : undefined}
         aria-disabled={!hasEn}
         class:list={[
           'inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition',
@@ -57,14 +56,11 @@ const copy = lang === 'es'
             : 'bg-ink-100 text-ink-400 cursor-not-allowed pointer-events-none',
         ]}
       >
-        <Icon name="arrow" class="h-4 w-4 rotate-90" />
         {copy.enLabel}{!hasEn && ` · ${copy.soon}`}
+        <Icon name="arrow" class="h-4 w-4" />
       </a>
       <a
         href={hasEs ? esPath : undefined}
-        target={hasEs ? '_blank' : undefined}
-        rel={hasEs ? 'noopener' : undefined}
-        download={hasEs ? '' : undefined}
         aria-disabled={!hasEs}
         class:list={[
           'inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition',
@@ -73,8 +69,8 @@ const copy = lang === 'es'
             : 'bg-ink-100 text-ink-400 cursor-not-allowed pointer-events-none',
         ]}
       >
-        <Icon name="arrow" class="h-4 w-4 rotate-90" />
         {copy.esLabel}{!hasEs && ` · ${copy.soon}`}
+        <Icon name="arrow" class="h-4 w-4" />
       </a>
     </div>
   </div>
@@ -90,9 +86,6 @@ const copy = lang === 'es'
     <div class="flex flex-wrap items-center gap-2">
       <a
         href={hasEn ? enPath : undefined}
-        target={hasEn ? '_blank' : undefined}
-        rel={hasEn ? 'noopener' : undefined}
-        download={hasEn ? '' : undefined}
         aria-disabled={!hasEn}
         class:list={[
           'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition',
@@ -101,14 +94,11 @@ const copy = lang === 'es'
             : 'bg-ink-100 text-ink-400 cursor-not-allowed pointer-events-none',
         ]}
       >
-        <Icon name="arrow" class="h-3.5 w-3.5 rotate-90" />
         {copy.enLabel}{!hasEn && ` · ${copy.soon}`}
+        <Icon name="arrow" class="h-3.5 w-3.5" />
       </a>
       <a
         href={hasEs ? esPath : undefined}
-        target={hasEs ? '_blank' : undefined}
-        rel={hasEs ? 'noopener' : undefined}
-        download={hasEs ? '' : undefined}
         aria-disabled={!hasEs}
         class:list={[
           'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition',
@@ -117,8 +107,8 @@ const copy = lang === 'es'
             : 'bg-ink-100 text-ink-400 cursor-not-allowed pointer-events-none',
         ]}
       >
-        <Icon name="arrow" class="h-3.5 w-3.5 rotate-90" />
         {copy.esLabel}{!hasEs && ` · ${copy.soon}`}
+        <Icon name="arrow" class="h-3.5 w-3.5" />
       </a>
     </div>
   </div>

@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import { site } from '../../config/site';
+
+export async function getStaticPaths() {
+  return [
+    {
+      params: { slug: 'english' },
+      props: { pdfUrl: site.forms.en, formName: 'English' },
+    },
+    {
+      params: { slug: 'spanish' },
+      props: { pdfUrl: site.forms.es, formName: 'Spanish' },
+    },
+  ];
+}
+
+const { pdfUrl, formName } = Astro.props;
+---
+<BaseLayout
+  title={`${formName} Registration Form — LIV Active Therapy`}
+  description={`Preview and download the ${formName.toLowerCase()} new-patient registration form for LIV Active Therapy.`}
+  lang="en"
+>
+  <PageHero eyebrow="Registration form" slim>
+    {formName} form
+  </PageHero>
+
+  <section class="bg-white pb-20 md:pb-24">
+    <div class="container-x">
+      <div class="mx-auto max-w-4xl">
+        <!-- Action bar -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-2xl bg-brand-50/50 ring-1 ring-brand-100 px-5 py-4">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+              <Icon name="check" class="h-5 w-5" />
+            </span>
+            <div>
+              <div class="text-sm font-bold text-ink-900">New-patient registration</div>
+              <div class="text-xs text-ink-600">Fill this out before your first visit to save time at check-in.</div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <a
+              href={pdfUrl}
+              download
+              class="inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 transition shadow-sm"
+            >
+              <Icon name="arrow" class="h-4 w-4 rotate-90" />
+              Download PDF
+            </a>
+            <a
+              href={pdfUrl}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-2 rounded-full bg-white ring-1 ring-brand-200 px-5 py-2.5 text-sm font-semibold text-brand-700 hover:bg-brand-50 transition"
+            >
+              Open in new tab
+              <Icon name="arrow" class="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+
+        <!-- PDF preview -->
+        <div class="mt-6 rounded-2xl overflow-hidden ring-1 ring-ink-200 shadow-xl shadow-brand-900/10 bg-ink-50">
+          <object
+            data={`${pdfUrl}#view=FitH`}
+            type="application/pdf"
+            class="block w-full"
+            style="height: 80vh; min-height: 600px;"
+          >
+            <div class="p-10 text-center">
+              <p class="text-base text-ink-700">
+                Your browser can't display the PDF inline.
+              </p>
+              <a
+                href={pdfUrl}
+                download
+                class="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700"
+              >
+                <Icon name="arrow" class="h-4 w-4 rotate-90" />
+                Download the form
+              </a>
+            </div>
+          </object>
+        </div>
+
+        <p class="mt-4 text-xs text-ink-500 text-center">
+          On mobile, the preview may not load — tap <strong>Download PDF</strong> above to view in your PDF app.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

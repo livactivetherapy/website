@@ -119,7 +119,7 @@ export const ui = {
     'footer.tagline': 'LivActive, LivWell.',
     'footer.rights': 'Todos los derechos reservados.',
     'footer.forms': 'Formularios de registro',
-    'footer.formsEn': 'English form',
+    'footer.formsEn': 'Formulario en Inglés',
     'footer.formsEs': 'Formulario en Español',
     'footer.privacy': 'Política de privacidad',
     'footer.about': 'En LivActive nos esforzamos por brindarte lo mejor. Nuestro equipo está formado por terapeutas físicos y ocupacionales líderes en la industria, dedicados a ayudarte a superar tus metas. Hemos trabajado con pacientes de todas las edades y dedicamos nuestros recursos para brindarte la atención del más alto nivel desde el momento en que cruzas nuestra puerta.',
