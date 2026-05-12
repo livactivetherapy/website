@@ -20,7 +20,8 @@ const {
   ogImage = '/og-image.jpg',
 } = Astro.props;
 
-const siteUrl = 'https://livactivetherapy.com';
+// Site URL is configured dynamically in astro.config.mjs based on the deploy target
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://livactivetherapy.com';
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const fullOgImage = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteUrl).toString();
 

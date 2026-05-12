@@ -1,7 +1,7 @@
 ---
 import { site } from '../config/site';
 
-const baseUrl = 'https://livactivetherapy.com';
+const baseUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://livactivetherapy.com';
 
 const organization = {
   '@context': 'https://schema.org',
