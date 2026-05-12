@@ -210,10 +210,25 @@ const primaryPhone = site.locations[0].phoneHref;
 </header>
 
 <script>
-  const btn = document.querySelector('[data-mobile-toggle]');
-  const panel = document.querySelector('[data-mobile-panel]');
+  const btn = document.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
+  const panel = document.querySelector<HTMLElement>('[data-mobile-panel]');
+
+  const setOpen = (open: boolean) => {
+    if (!btn || !panel) return;
+    panel.classList.toggle('hidden', !open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    // Lock body scroll while the menu is open
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+
   btn?.addEventListener('click', () => {
-    const open = panel?.classList.toggle('hidden');
-    btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    const isCurrentlyClosed = panel?.classList.contains('hidden');
+    setOpen(!!isCurrentlyClosed);
+  });
+
+  // If the viewport grows past mobile breakpoint (e.g. user rotates device or resizes),
+  // close the menu and unlock scroll.
+  window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+    if (e.matches) setOpen(false);
   });
 </script>

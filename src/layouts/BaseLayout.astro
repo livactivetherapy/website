@@ -17,7 +17,7 @@ const {
   title,
   description = 'Outpatient physical and occupational therapy in Miami — personalized rehabilitation in Kendall and Doral. Bilingual care, same-week appointments, evidence-based treatment.',
   lang = detected,
-  ogImage = '/logo.png',
+  ogImage = '/og-image.jpg',
 } = Astro.props;
 
 const siteUrl = 'https://livactivetherapy.com';
@@ -53,6 +53,9 @@ const esUrl = new URL(stripped === '/' ? '/es/' : `/es${stripped}`, siteUrl).toS
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={fullOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="LIV Active Therapy Center" />
     <meta property="og:site_name" content="LIV Active Therapy" />
     <meta property="og:locale" content={lang === 'es' ? 'es_US' : 'en_US'} />
     <meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_US'} />
