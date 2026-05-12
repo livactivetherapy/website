@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
+import { getCollection } from 'astro:content';
 import { useTranslations, localizedPath, type Lang, languages } from '../i18n/ui';
 import { site } from '../config/site';
 
@@ -9,13 +10,35 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const L = (p: string) => localizedPath(lang, p);
 
-const nav = [
+const services = (await getCollection('services', ({ data }) => data.lang === lang))
+  .sort((a, b) => a.data.order - b.data.order);
+
+type NavItem = {
+  href?: string;
+  label: string;
+  dropdown?: Array<{ href: string; label: string; icon: string; external?: boolean; download?: boolean }>;
+};
+
+const nav: NavItem[] = [
   { href: L('/'), label: t('nav.home') },
-  { href: L('/services'), label: t('nav.services') },
-  { href: L('/accident-injury'), label: t('nav.injury') },
+  {
+    href: L('/services'),
+    label: t('nav.services'),
+    dropdown: [
+      ...services.map((s) => ({ href: L(`/services/${s.data.slug}`), label: s.data.title, icon: s.data.icon })),
+      { href: L('/accident-injury'), label: t('nav.injury'), icon: 'pulse' },
+    ],
+  },
   { href: L('/about'), label: t('nav.about') },
   { href: L('/team'), label: t('nav.team') },
   { href: L('/locations'), label: t('nav.locations') },
+  {
+    label: t('nav.forms'),
+    dropdown: [
+      { href: site.forms.en, label: t('footer.formsEn'), icon: 'arrow', external: true, download: true },
+      { href: site.forms.es, label: t('footer.formsEs'), icon: 'arrow', external: true, download: true },
+    ],
+  },
   { href: L('/contact'), label: t('nav.contact') },
 ];
 
@@ -34,14 +57,63 @@ const primaryPhone = site.locations[0].phoneHref;
     </a>
 
     <nav class="hidden lg:flex items-center gap-1 self-center" aria-label="Primary">
-      {nav.map((item) => (
-        <a
-          href={item.href}
-          class="px-3 py-2 text-sm font-medium text-ink-700 hover:text-brand-700 transition-colors"
-        >
-          {item.label}
-        </a>
-      ))}
+      {nav.map((item) =>
+        item.dropdown ? (
+          <div class="relative group">
+            {item.href ? (
+              <a
+                href={item.href}
+                class="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-ink-700 hover:text-brand-700 transition-colors"
+                aria-haspopup="true"
+              >
+                {item.label}
+                <svg class="h-3.5 w-3.5 transition-transform group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </a>
+            ) : (
+              <button
+                type="button"
+                class="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-ink-700 hover:text-brand-700 transition-colors"
+                aria-haspopup="true"
+              >
+                {item.label}
+                <svg class="h-3.5 w-3.5 transition-transform group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+            )}
+            <!-- Dropdown panel -->
+            <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all duration-150 z-50">
+              <div class="rounded-2xl bg-white shadow-xl ring-1 ring-ink-100 p-2 min-w-[300px]">
+                {item.dropdown.map((d) => (
+                  <a
+                    href={d.href}
+                    target={d.external ? '_blank' : undefined}
+                    rel={d.external ? 'noopener' : undefined}
+                    download={d.download ? '' : undefined}
+                    class="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-brand-50 transition-colors group/item"
+                  >
+                    <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600 group-hover/item:bg-brand-600 group-hover/item:text-white transition-colors">
+                      <Icon name={d.icon} class="h-4 w-4" />
+                    </span>
+                    <span class="text-sm font-semibold text-ink-800 group-hover/item:text-brand-800">
+                      {d.label}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <a
+            href={item.href}
+            class="px-3 py-2 text-sm font-medium text-ink-700 hover:text-brand-700 transition-colors"
+          >
+            {item.label}
+          </a>
+        )
+      )}
     </nav>
 
     <div class="flex items-center gap-2">
@@ -78,14 +150,45 @@ const primaryPhone = site.locations[0].phoneHref;
     class="lg:hidden hidden border-t border-ink-100 bg-white"
   >
     <nav class="container-x py-4 flex flex-col gap-1" aria-label="Mobile">
-      {nav.map((item) => (
-        <a
-          href={item.href}
-          class="py-3 text-base font-medium text-ink-800 hover:text-brand-700"
-        >
-          {item.label}
-        </a>
-      ))}
+      {nav.map((item) =>
+        item.dropdown ? (
+          <>
+            {item.href ? (
+              <a
+                href={item.href}
+                class="py-3 text-base font-medium text-ink-800 hover:text-brand-700"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <div class="py-3 text-base font-medium text-ink-800">
+                {item.label}
+              </div>
+            )}
+            <div class="pl-4 border-l-2 border-brand-100 ml-1 mb-2 flex flex-col gap-1">
+              {item.dropdown.map((d) => (
+                <a
+                  href={d.href}
+                  target={d.external ? '_blank' : undefined}
+                  rel={d.external ? 'noopener' : undefined}
+                  download={d.download ? '' : undefined}
+                  class="flex items-center gap-2.5 py-2 text-sm font-medium text-ink-700 hover:text-brand-700"
+                >
+                  <Icon name={d.icon} class="h-4 w-4 text-brand-600" />
+                  {d.label}
+                </a>
+              ))}
+            </div>
+          </>
+        ) : (
+          <a
+            href={item.href}
+            class="py-3 text-base font-medium text-ink-800 hover:text-brand-700"
+          >
+            {item.label}
+          </a>
+        )
+      )}
       <a
         href={altPath}
         class="py-3 text-base font-medium text-ink-600"

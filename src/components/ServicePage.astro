@@ -1,0 +1,586 @@
+---
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from './PageHero.astro';
+import Icon from './Icon.astro';
+import { localizedPath, type Lang } from '../i18n/ui';
+import { site } from '../config/site';
+
+interface Props {
+  entry: CollectionEntry<'services'>;
+  lang: Lang;
+}
+
+const { entry, lang } = Astro.props;
+const { Content } = await render(entry);
+const L = (p: string) => localizedPath(lang, p);
+
+const copy = lang === 'es'
+  ? {
+      back: 'Todos los servicios',
+      eyebrow: 'Servicio',
+      overviewLabel: 'Resumen',
+      expectEyebrow: 'Qué esperar',
+      expectTitle: 'Tu visita, paso a paso.',
+      conditionsEyebrow: 'Condiciones que tratamos',
+      conditionsTitle: 'En qué te podemos ayudar.',
+      whoEyebrow: 'Para quién es',
+      ctaEyebrow: '¿Listo para comenzar?',
+      ctaTitle: 'Empieza a',
+      ctaTitleAccent: 'moverte',
+      ctaBody: 'Llámanos hoy y te programamos esta semana.',
+      ctaCall: 'Llámanos',
+      viewAll: 'Ver todo',
+      viewLess: 'Ver menos',
+    }
+  : {
+      back: 'All services',
+      eyebrow: 'Service',
+      overviewLabel: 'Overview',
+      expectEyebrow: 'What to expect',
+      expectTitle: 'Your visit, step by step.',
+      conditionsEyebrow: 'Conditions we treat',
+      conditionsTitle: 'What we help with.',
+      whoEyebrow: "Who it's for",
+      ctaEyebrow: 'Ready to start?',
+      ctaTitle: "Let's get you",
+      ctaTitleAccent: 'moving',
+      ctaBody: "Call us today and we'll schedule you this week.",
+      ctaCall: 'Call us',
+      viewAll: 'View all',
+      viewLess: 'View less',
+    };
+
+// Threshold for the mobile "view all" collapse
+const MOBILE_VISIBLE = 6;
+
+const slugify = (s: string) =>
+  s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+// Parse "Region: items, items, items" pattern + look up an optional image.
+// Convention: drop an image at public/services/{service-slug}/{condition-slug}.{jpg,jpeg,png,webp}
+const imageExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+const findImage = (serviceSlug: string, conditionSlug: string) => {
+  for (const ext of imageExtensions) {
+    const rel = `/services/${serviceSlug}/${conditionSlug}.${ext}`;
+    if (existsSync(join(process.cwd(), 'public', rel))) return rel;
+  }
+  return null;
+};
+
+// Per-service image zoom (cosmetic crop). Key: "{service-slug}/{condition-slug}"
+const imageZoom: Record<string, number> = {};
+
+// Cards that should NOT be forced to equalize height with others in the same list.
+// Use this for outliers that have far more content than peers.
+const noEqualize = new Set<string>([
+  'physical-therapy/knee',
+  'physical-therapy/foot-ankle',
+]);
+
+// Cards rendered with a horizontal hero image (full width on top) and a 3-column item grid below.
+// Use for very content-heavy cards where the side-by-side layout would be too tall.
+const wideLayout = new Set<string>([
+  'physical-therapy/knee',
+]);
+
+// Items longer than this get moved to a single full-width row at the bottom of the card,
+// since they don't fit nicely in the 2-column grid.
+const LONG_ITEM_LENGTH = 35;
+
+const parsedConditions = entry.data.conditions.map((c: string) => {
+  const idx = c.indexOf(':');
+  const label = idx === -1 ? null : c.slice(0, idx).trim();
+  const itemsRaw = idx === -1 ? c : c.slice(idx + 1).trim();
+  const allItems = itemsRaw.split(',').map((s) => s.trim()).filter(Boolean);
+  const conditionSlug = label ? slugify(label) : slugify(itemsRaw);
+  const key = `${entry.data.slug}/${conditionSlug}`;
+  const isWide = wideLayout.has(key);
+  const items = isWide ? allItems : allItems.filter((s) => s.length < LONG_ITEM_LENGTH);
+  const longItems = isWide ? [] : allItems.filter((s) => s.length >= LONG_ITEM_LENGTH);
+  const imagePath = findImage(entry.data.slug, conditionSlug);
+  const zoom = imageZoom[key] ?? 1;
+  const excludeFromEqualize = noEqualize.has(key);
+  return { label, items, longItems, imagePath, hasImage: imagePath !== null, zoom, excludeFromEqualize, isWide };
+});
+
+// "Simple" services (no labeled categories — like cupping, BFR, kinesio) get a
+// stripped-down conditions section: one image + flat bullet list, no card grid.
+// Empty conditions array also counts as "simple" (when service uses a different
+// content shape like the `sports` field for Sports Performance).
+const isSimpleService = entry.data.conditions.length === 0 || parsedConditions.every((c) => c.label === null);
+const hasSportsGrid = entry.data.sports && entry.data.sports.length > 0;
+const flatBullets = parsedConditions.flatMap((c) => [...c.items, ...c.longItems]);
+const mainImagePath = findImage(entry.data.slug, 'main');
+const hasMainImage = mainImagePath !== null;
+// Per-service aspect ratio for the hero image on desktop (default portrait 4/5).
+// On mobile, all simple-service images render at 16:9 so they don't dominate the page.
+const mainImageAspect: Record<string, string> = {
+  'sports-performance': '4/3',
+};
+const desktopAspect = mainImageAspect[entry.data.slug] ?? '4/5';
+const mainAspectStyle = `aspect-ratio: 16/9; @media (min-width: 1024px) { aspect-ratio: ${desktopAspect}; }`;
+const desktopAspectClass = entry.data.slug in mainImageAspect ? 'lg:[aspect-ratio:4/3]' : 'lg:[aspect-ratio:4/5]';
+const mobileAspectClass = 'aspect-video';
+// Wider image services get a more balanced column split.
+const isWideMainImage = entry.data.slug in mainImageAspect;
+// Optional second image: when both main-1 and main-2 exist, the simple layout
+// switches to alternating two-block style (used for kinesiotaping etc.).
+const mainImage1Path = findImage(entry.data.slug, 'main-1');
+const mainImage2Path = findImage(entry.data.slug, 'main-2');
+const isAlternatingLayout = isSimpleService && mainImage1Path !== null && mainImage2Path !== null;
+
+const phoneHref = site.locations[0].phoneHref;
+const phoneLabel = site.locations[0].phone;
+---
+<BaseLayout
+  title={`${entry.data.title} — LIV Active Therapy`}
+  description={entry.data.summary}
+  lang={lang}
+>
+  <PageHero eyebrow={copy.eyebrow} slim>
+    {entry.data.title}
+  </PageHero>
+
+  {isSimpleService && (
+    <!-- Combined "simple" section: image + body + benefits, all in one -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-brand-50/40 via-white to-white py-16 md:py-24">
+      <div aria-hidden="true" class="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-brand-200/30 blur-3xl"></div>
+      <div aria-hidden="true" class="pointer-events-none absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-accent-200/25 blur-3xl"></div>
+
+      <div class="container-x relative">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <!-- Image with floating accent (renders BELOW content on mobile, beside on desktop) -->
+          <div class={`order-2 lg:order-1 ${isWideMainImage ? 'lg:col-span-6' : 'lg:col-span-5'}`}>
+            <div class="relative">
+              {isAlternatingLayout ? (
+                <div class={`relative w-full ${mobileAspectClass} ${desktopAspectClass} rounded-[2rem] overflow-hidden shadow-2xl shadow-brand-900/20 ring-1 ring-brand-900/10`} data-service-slideshow>
+                  <img
+                    src={mainImage1Path}
+                    alt={entry.data.title}
+                    loading="lazy"
+                    class="service-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-100"
+                  />
+                  <img
+                    src={mainImage2Path}
+                    alt={entry.data.title}
+                    loading="lazy"
+                    class="service-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out opacity-0"
+                  />
+                </div>
+              ) : hasMainImage ? (
+                <img
+                  src={mainImagePath}
+                  alt={entry.data.title}
+                  loading="lazy"
+                  class={`w-full ${mobileAspectClass} ${desktopAspectClass} object-cover rounded-[2rem] shadow-2xl shadow-brand-900/20 ring-1 ring-brand-900/10`}
+                />
+              ) : (
+                <div aria-hidden="true" class={`relative w-full ${mobileAspectClass} ${desktopAspectClass} rounded-[2rem] bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500 ring-1 ring-brand-300/50 shadow-2xl shadow-brand-900/15 flex items-center justify-center overflow-hidden`}>
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,white,transparent_55%)] opacity-25 mix-blend-overlay"></div>
+                  <Icon name={entry.data.icon} class="h-24 w-24 text-white/65 relative" />
+                </div>
+              )}
+              {flatBullets.length > 0 && (
+                <div class="absolute -bottom-5 -right-5 hidden md:flex items-center gap-3 rounded-2xl bg-white px-4 py-3 ring-1 ring-brand-100 shadow-xl">
+                  <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+                    <Icon name={entry.data.icon} class="h-5 w-5" />
+                  </span>
+                  <div>
+                    <div class="text-2xl font-bold text-ink-900 leading-none">{flatBullets.length}</div>
+                    <div class="text-[10px] font-bold text-ink-500 uppercase tracking-[0.18em]">
+                      {lang === 'es' ? 'beneficios' : 'benefits'}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <!-- Content + benefits (renders FIRST on mobile so text comes before image) -->
+          <div class={`order-1 lg:order-2 ${isWideMainImage ? 'lg:col-span-6' : 'lg:col-span-7'}`}>
+            <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+              <span class="h-px w-8 bg-brand-300"></span>
+              {copy.overviewLabel}
+            </span>
+            <h2 class="mt-3 text-3xl md:text-4xl font-bold tracking-tight text-ink-900 leading-tight">
+              {entry.data.title}
+            </h2>
+            <article class="mt-5 prose prose-base max-w-none prose-headings:font-display prose-headings:tracking-tight prose-headings:text-ink-900 prose-headings:text-lg prose-p:text-ink-700 prose-p:leading-relaxed">
+              <Content />
+            </article>
+
+            {!entry.data.whoItsFor && !hasSportsGrid && flatBullets.length > 0 && (
+              <div class="mt-10">
+                <div class="flex items-center gap-3">
+                  <span class="text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+                    {copy.conditionsEyebrow}
+                  </span>
+                  <span class="h-px flex-1 bg-brand-100"></span>
+                </div>
+                <ul class="mt-5 grid sm:grid-cols-2 gap-x-6 gap-y-3">
+                  {flatBullets.map((item) => (
+                    <li class="group flex items-start gap-3 text-sm md:text-base text-ink-700 leading-snug">
+                      <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-colors">
+                        <Icon name="check" class="h-3.5 w-3.5" />
+                      </span>
+                      <span class="group-hover:text-ink-900 transition-colors">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {entry.data.whoItsFor && (
+          <!-- Bottom row: Who it's for prose + Conditions bullets, split -->
+          <div class="mt-16 md:mt-20 grid md:grid-cols-2 gap-10 lg:gap-14">
+            <div>
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+                  {copy.whoEyebrow}
+                </span>
+                <span class="h-px flex-1 bg-brand-100"></span>
+              </div>
+              <p class="mt-5 text-ink-700 leading-relaxed">
+                {entry.data.whoItsFor}
+              </p>
+            </div>
+            <div>
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+                  {copy.conditionsEyebrow}
+                </span>
+                <span class="h-px flex-1 bg-brand-100"></span>
+              </div>
+              <ul class={`mt-5 grid ${flatBullets.length > 3 ? 'sm:grid-cols-2' : ''} gap-x-6 gap-y-3`} style={flatBullets.length > 3 ? `grid-template-rows: repeat(${Math.ceil(flatBullets.length / 2)}, auto); grid-auto-flow: column;` : undefined}>
+                {flatBullets.map((item) => (
+                  <li class="group flex items-start gap-3 text-sm md:text-base text-ink-700 leading-snug">
+                    <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-colors">
+                      <Icon name="check" class="h-3.5 w-3.5" />
+                    </span>
+                    <span class="group-hover:text-ink-900 transition-colors">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  {hasSportsGrid && (
+    <!-- Sport-specific grid -->
+    <section class="bg-white py-16 md:py-20 border-t border-ink-100">
+      <div class="container-x">
+        <div class="mx-auto max-w-2xl text-center">
+          <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+            <span class="h-px w-8 bg-brand-300"></span>
+            {lang === 'es' ? 'Programación por deporte' : 'Sport-specific programming'}
+            <span class="h-px w-8 bg-brand-300"></span>
+          </span>
+          <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-ink-900">
+            {lang === 'es' ? 'Trabajamos con tu deporte.' : 'Built for your sport.'}
+          </h2>
+        </div>
+
+        <ul class="mx-auto mt-12 max-w-6xl grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          {entry.data.sports!.map((s) => (
+            <li class="group">
+              <span class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 group-hover:bg-brand-600 group-hover:text-white group-hover:-translate-y-0.5 transition-all duration-300 shadow-sm">
+                <Icon name={s.icon} class="h-7 w-7" />
+              </span>
+              <h3 class="mt-5 text-xl font-bold text-ink-900 tracking-tight">{s.name}</h3>
+              <p class="mt-2 text-sm text-ink-600 leading-relaxed">{s.description}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {!isSimpleService && (
+  <!-- Overview: structured 2-column with eyebrow + body. Combined with "What to expect" cards below for a single section. -->
+  <section class="bg-white py-14 md:py-16">
+    <div class="container-x">
+      <div class="mx-auto max-w-5xl grid md:grid-cols-3 gap-8 md:gap-12">
+        <div class="md:col-span-1">
+          <span class="text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+            {copy.overviewLabel}
+          </span>
+          <h2 class="mt-2 text-2xl md:text-3xl font-bold text-ink-900 tracking-tight leading-tight">
+            {entry.data.title}
+          </h2>
+        </div>
+        <article class="md:col-span-2 prose prose-base max-w-none prose-headings:font-display prose-headings:tracking-tight prose-headings:text-ink-900 prose-headings:text-xl prose-p:text-ink-700 prose-p:leading-relaxed">
+          <Content />
+        </article>
+      </div>
+
+      {entry.data.whatToExpect.length > 0 && !isSimpleService && (
+        <div class="mx-auto mt-14 md:mt-16 max-w-5xl">
+          <div class="flex items-center gap-3">
+            <span class="text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+              {copy.expectEyebrow}
+            </span>
+            <span class="h-px flex-1 bg-ink-100"></span>
+          </div>
+          <ol class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {entry.data.whatToExpect.map((step, i) => (
+              <li class="rounded-2xl bg-white ring-1 ring-ink-100 p-5">
+                <div class="text-3xl font-display font-extrabold text-brand-300 leading-none">
+                  0{i + 1}
+                </div>
+                <p class="mt-3 text-sm text-ink-700 leading-relaxed">{step}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+    </div>
+  </section>
+  )}
+
+  <!-- Conditions we treat (rich layout for services with labeled categories) -->
+  {entry.data.conditions.length > 0 && !isSimpleService && (
+    <section class="bg-ink-50/40 py-16 md:py-20 border-t border-ink-100">
+      <div class="container-x">
+        <div class="mx-auto max-w-2xl text-center">
+          <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-700">
+            <span class="h-px w-8 bg-brand-300"></span>
+            {copy.conditionsEyebrow}
+            <span class="h-px w-8 bg-brand-300"></span>
+          </span>
+          <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-ink-900">
+            {copy.conditionsTitle}
+          </h2>
+        </div>
+
+        <ul class="mx-auto mt-10 max-w-5xl space-y-6" data-equalize-cards>
+          {parsedConditions.map(({ label, items, longItems, imagePath, hasImage, zoom, excludeFromEqualize, isWide }) => {
+            const total = items.length + longItems.length;
+            const isCollapsible = total > MOBILE_VISIBLE;
+            return isWide ? (
+              <li
+                data-no-equalize={excludeFromEqualize ? '' : undefined}
+                data-collapsible={isCollapsible ? 'true' : undefined}
+                class="group overflow-hidden rounded-2xl bg-white ring-1 ring-ink-100 hover:ring-brand-300 hover:shadow-lg hover:shadow-brand-900/5 transition-all duration-300"
+              >
+                <div class="w-full overflow-hidden">
+                  {hasImage ? (
+                    <img
+                      src={imagePath}
+                      alt={label || items.join(', ')}
+                      loading="lazy"
+                      decoding="async"
+                      class="w-full aspect-[16/5] object-cover"
+                      style={zoom !== 1 ? `transform: scale(${zoom});` : undefined}
+                    />
+                  ) : (
+                    <div aria-hidden="true" class="w-full aspect-[16/5] bg-gradient-to-br from-brand-100 via-brand-50 to-white flex items-center justify-center">
+                      <Icon name={entry.data.icon} class="h-12 w-12 text-brand-300" />
+                    </div>
+                  )}
+                </div>
+                <div class="p-6 md:p-8">
+                  {label && (
+                    <h3 class="text-2xl font-bold text-ink-900 tracking-tight">{label}</h3>
+                  )}
+                  <ul class={`${label ? 'mt-4' : ''} grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2`}>
+                    {items.map((item, i) => (
+                      <li
+                        data-extra={i >= MOBILE_VISIBLE ? '' : undefined}
+                        class="flex items-start gap-2.5 text-sm text-ink-700 leading-snug"
+                      >
+                        <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  {isCollapsible && (
+                    <button
+                      type="button"
+                      data-toggle-conditions
+                      aria-expanded="false"
+                      class="mt-5 md:hidden inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-800"
+                    >
+                      <span data-toggle-collapsed>{copy.viewAll} ({total})</span>
+                      <span data-toggle-expanded class="hidden">{copy.viewLess}</span>
+                      <svg class="h-3.5 w-3.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+              </li>
+            ) : (
+              <li
+                data-no-equalize={excludeFromEqualize ? '' : undefined}
+                data-collapsible={isCollapsible ? 'true' : undefined}
+                class="group overflow-hidden rounded-2xl bg-white ring-1 ring-ink-100 hover:ring-brand-300 hover:shadow-lg hover:shadow-brand-900/5 transition-all duration-300 md:flex"
+              >
+                <div class="md:w-2/5 shrink-0 overflow-hidden">
+                  {hasImage ? (
+                    <img
+                      src={imagePath}
+                      alt={label || items.join(', ')}
+                      loading="lazy"
+                      decoding="async"
+                      class="w-full h-56 md:h-full object-cover"
+                      style={zoom !== 1 ? `transform: scale(${zoom});` : undefined}
+                    />
+                  ) : (
+                    <div aria-hidden="true" class="w-full h-56 md:h-full bg-gradient-to-br from-brand-100 via-brand-50 to-white flex items-center justify-center">
+                      <Icon name={entry.data.icon} class="h-12 w-12 text-brand-300" />
+                    </div>
+                  )}
+                </div>
+                <div class="p-6 md:p-8 flex-1 min-w-0 flex flex-col justify-center">
+                  {label && (
+                    <h3 class="text-2xl font-bold text-ink-900 tracking-tight">{label}</h3>
+                  )}
+                  <ul class={`${label ? 'mt-4' : ''} grid sm:grid-cols-2 gap-x-6 gap-y-2`}>
+                    {items.map((item, i) => (
+                      <li
+                        data-extra={i >= MOBILE_VISIBLE ? '' : undefined}
+                        class="flex items-start gap-2.5 text-sm text-ink-700 leading-snug"
+                      >
+                        <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  {longItems.length > 0 && (
+                    <ul class="mt-2 space-y-2">
+                      {longItems.map((item, i) => (
+                        <li
+                          data-extra={items.length + i >= MOBILE_VISIBLE ? '' : undefined}
+                          class="flex items-start gap-2.5 text-sm text-ink-700 leading-snug"
+                        >
+                          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {isCollapsible && (
+                    <button
+                      type="button"
+                      data-toggle-conditions
+                      aria-expanded="false"
+                      class="mt-5 md:hidden inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-800"
+                    >
+                      <span data-toggle-collapsed>{copy.viewAll} ({total})</span>
+                      <span data-toggle-expanded class="hidden">{copy.viewLess}</span>
+                      <svg class="h-3.5 w-3.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- Final CTA — matches Promise style -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-900 to-brand-950">
+    <div aria-hidden="true" class="pointer-events-none absolute -top-32 -left-24 h-[28rem] w-[28rem] rounded-full bg-brand-600/30 blur-3xl"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute top-1/2 -right-32 -translate-y-1/2 h-[28rem] w-[28rem] rounded-full bg-brand-500/25 blur-3xl"></div>
+
+    <div class="container-x relative py-14 md:py-16">
+      <div class="mx-auto max-w-3xl text-center text-white">
+        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-200">
+          <span class="h-px w-8 bg-brand-300"></span>
+          {copy.ctaEyebrow}
+        </span>
+        <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight leading-tight">
+          {copy.ctaTitle} <span class="text-brand-300 italic">{copy.ctaTitleAccent}</span>.
+        </h2>
+        <p class="mt-5 text-base text-brand-100/90 leading-relaxed">
+          {copy.ctaBody}
+        </p>
+        <div class="mt-7 flex items-center justify-center">
+          <a
+            href={phoneHref}
+            class="inline-flex items-center gap-2 rounded-full bg-white text-brand-900 px-6 py-3 text-sm font-semibold hover:bg-brand-50 transition shadow-md shadow-brand-950/30"
+          >
+            <Icon name="phone" class="h-4 w-4" />
+            {copy.ctaCall} · {phoneLabel}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    /* Mobile-only "view all" collapse for condition cards */
+    @media (max-width: 767px) {
+      [data-collapsible='true']:not(.is-expanded) [data-extra] {
+        display: none;
+      }
+    }
+    [data-collapsible].is-expanded [data-toggle-conditions] svg {
+      transform: rotate(180deg);
+    }
+  </style>
+
+  <script>
+    // Rotate the two simple-service images (kinesiotaping etc.)
+    document.querySelectorAll<HTMLElement>('[data-service-slideshow]').forEach((box) => {
+      const slides = box.querySelectorAll<HTMLImageElement>('.service-slide');
+      if (slides.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let current = 0;
+      setInterval(() => {
+        const next = (current + 1) % slides.length;
+        slides[current].classList.replace('opacity-100', 'opacity-0');
+        slides[next].classList.replace('opacity-0', 'opacity-100');
+        current = next;
+      }, 4500);
+    });
+
+    // Toggle the condition-card mobile collapse
+    document.querySelectorAll<HTMLButtonElement>('[data-toggle-conditions]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const li = btn.closest<HTMLElement>('li[data-collapsible]');
+        if (!li) return;
+        const expanded = li.classList.toggle('is-expanded');
+        btn.setAttribute('aria-expanded', String(expanded));
+        btn.querySelector<HTMLElement>('[data-toggle-collapsed]')?.classList.toggle('hidden', expanded);
+        btn.querySelector<HTMLElement>('[data-toggle-expanded]')?.classList.toggle('hidden', !expanded);
+      });
+    });
+
+    // Equalize condition card heights to the tallest in each list (desktop only).
+    // Cards marked [data-no-equalize] are skipped — both from max calculation and from being adjusted.
+    const equalize = () => {
+      const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+      document.querySelectorAll<HTMLElement>('[data-equalize-cards]').forEach((list) => {
+        const allCards = Array.from(list.querySelectorAll<HTMLElement>(':scope > li'));
+        allCards.forEach((c) => { c.style.minHeight = ''; });
+        if (!isDesktop) return;
+        const cards = allCards.filter((c) => !c.hasAttribute('data-no-equalize'));
+        if (cards.length < 2) return;
+        requestAnimationFrame(() => {
+          let max = 0;
+          cards.forEach((c) => { max = Math.max(max, c.getBoundingClientRect().height); });
+          cards.forEach((c) => { c.style.minHeight = max + 'px'; });
+        });
+      });
+    };
+    let resizeTimer: number;
+    window.addEventListener('load', equalize);
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(equalize, 150);
+    });
+  </script>
+</BaseLayout>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
+import RegistrationForms from '../../components/RegistrationForms.astro';
 import { useTranslations } from '../../i18n/ui';
 import { site } from '../../config/site';
 
@@ -37,6 +38,8 @@ const t = useTranslations('es');
             </div>
           </div>
         ))}
+
+        <RegistrationForms lang="es" />
       </div>
     </div>
 

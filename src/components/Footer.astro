@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
+import RegistrationForms from './RegistrationForms.astro';
 import { getCollection } from 'astro:content';
 import { useTranslations, localizedPath, type Lang } from '../i18n/ui';
 import { site } from '../config/site';
@@ -114,6 +115,13 @@ const services = (await getCollection('services', ({ data }) => data.lang === la
           </li>
         ))}
       </ul>
+    </div>
+  </div>
+
+  <!-- Registration forms band -->
+  <div class="relative border-t border-ink-200/60 bg-brand-50/30">
+    <div class="container-x py-5">
+      <RegistrationForms lang={lang} variant="compact" />
     </div>
   </div>
 

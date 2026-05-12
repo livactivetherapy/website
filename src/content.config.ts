@@ -12,6 +12,12 @@ const services = defineCollection({
     order: z.number().default(100),
     conditions: z.array(z.string()).default([]),
     whatToExpect: z.array(z.string()).default([]),
+    whoItsFor: z.string().optional(),
+    sports: z.array(z.object({
+      name: z.string(),
+      icon: z.string(),
+      description: z.string(),
+    })).optional(),
   }),
 });
 

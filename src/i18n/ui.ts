@@ -16,6 +16,7 @@ export const ui = {
     'nav.contact': 'Contact',
     'nav.insurance': 'Insurance',
     'nav.injury': 'Accident Injury',
+    'nav.forms': 'Forms',
     'nav.book': 'Book an appointment',
 
     'cta.call': 'Call now',
@@ -81,6 +82,7 @@ export const ui = {
     'nav.contact': 'Contacto',
     'nav.insurance': 'Seguros',
     'nav.injury': 'Lesiones',
+    'nav.forms': 'Formularios',
     'nav.book': 'Reservar una cita',
 
     'cta.call': 'Llamar ahora',

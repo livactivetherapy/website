@@ -40,7 +40,7 @@ export const site = {
     facebook: 'https://facebook.com/livactivetherapy',
   },
   forms: {
-    en: '/forms/registration-english.pdf',
-    es: '/forms/registration-spanish.pdf',
+    en: '/forms/Patient-Registration-English.pdf',
+    es: '/forms/Patient-Registration-Spanish.pdf',
   },
 } as const;
